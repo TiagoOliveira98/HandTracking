@@ -17,15 +17,16 @@ public class ColliderCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Points: " + points);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Grabbable")
         {
+            droppedObject = other.gameObject;
             points += 1;
-            Destroy(other);
+            Destroy(droppedObject);
         }
     }
 }
