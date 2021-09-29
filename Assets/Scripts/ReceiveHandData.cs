@@ -1,4 +1,4 @@
-﻿/*
+﻿ /*
     @author: Thanos
     -----------------------
     UDP-Receive (from python client)
@@ -70,7 +70,7 @@ public class ReceiveHandData : MonoBehaviour {
 
     public GameObject GrabPointRight, GrabPointLeft;
 
-    public GameObject cup, cup1;
+    //public GameObject cup, cup1;
 
     /*int check1;
     int check2;*/
@@ -241,10 +241,10 @@ public class ReceiveHandData : MonoBehaviour {
         }
         /*}*/
 
-        cup.transform.position = new Vector3(-8.65f, -9.5f, 12.11f);
+        /*cup.transform.position = new Vector3(-8.65f, -9.5f, 12.11f);
         cup1.transform.localPosition = new Vector3(-2.19f, -0.3899994f, 2.41f);
         cup.transform.eulerAngles = new Vector3(0, 0, 0);
-        cup1.transform.eulerAngles = new Vector3(0, 0, 0);
+        cup1.transform.eulerAngles = new Vector3(0, 0, 0);*/
 
     }
 
