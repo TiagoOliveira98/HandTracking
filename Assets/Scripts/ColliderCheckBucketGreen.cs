@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ColliderCheck : MonoBehaviour
+public class ColliderCheckBucketGreen : MonoBehaviour
 {
     GameObject droppedObject;
     //GameObject Counter;
@@ -39,14 +39,33 @@ public class ColliderCheck : MonoBehaviour
             droppedObject = other.gameObject;
             Points.point += 1;
             //points += 1;
-            Destroy(droppedObject);
-            SceneManager.LoadScene("Level2");
+            //Destroy(droppedObject);
+            //SceneManager.LoadScene("Level2");
+            //Respawn a new one
+            /*other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
+            int number = Random.Range(0, 2);
+            if (number == 0)
+            {*/
+                //GetComponent<MeshRenderer>().material = blue;
+                /*other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
+                other.gameObject.tag = "blue";*/
+                //tag = "blue";
+            /*}
+            else if (number == 1)
+            {*/
+                //GetComponent<MeshRenderer>().material = green;
+                /*other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
+                other.gameObject.tag = "green";*/
+                //tag = "green";
+            //}
+
         }
-        else 
+        else
         {
             //Destroy the object and relocate it to teh initial position
-            other.gameObject.transform.position = new Vector3( 0.6000002f, -7.99f, 1.8f);
+            other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
 
         }
     }
 }
+

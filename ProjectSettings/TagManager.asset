@@ -7,6 +7,8 @@ TagManager:
   - Grabbable
   - Open
   - Closed
+  - blue
+  - green
   layers:
   - Default
   - TransparentFX

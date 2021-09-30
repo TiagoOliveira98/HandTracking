@@ -161,7 +161,7 @@ public class Grab : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Grabbable")
+        if (other.gameObject.tag == "Grabbable" || other.gameObject.tag == "blue" || other.gameObject.tag == "green")
         {
             //Turn off the collisions
             WRIST.GetComponent<Rigidbody>().detectCollisions = false;
