@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1628,6 +1628,7 @@ GameObject:
   - component: {fileID: 325207779}
   - component: {fileID: 325207781}
   - component: {fileID: 325207780}
+  - component: {fileID: 325207782}
   m_Layer: 0
   m_Name: ColliderBucket
   m_TagString: Untagged
@@ -1656,7 +1657,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 325207778}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96f8a154aa5bb1247aeec1ec3932eb72, type: 3}
   m_Name: 
@@ -1683,6 +1684,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5, y: 1.8, z: 3.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &325207782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325207778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27399c867e518104580f35ecb1de90ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cup: {fileID: 823505414}
+  cup1: {fileID: 1769180560}
+  color: blue
+  x1: -4
+  y1: -9.5
+  z1: 12.11
+  x2: -3.86
+  y2: -0.3899994
+  z2: 2.41
 --- !u!1 &382771152
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,7 +3074,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823505414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15a527ecf46153e4abd5fac212d53d9b, type: 3}
   m_Name: 
@@ -5089,7 +5111,7 @@ GameObject:
   - component: {fileID: 1261229816}
   - component: {fileID: 1261229821}
   m_Layer: 0
-  m_Name: Cube1
+  m_Name: Cube
   m_TagString: Grabbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5227,7 +5249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1305296205}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15a527ecf46153e4abd5fac212d53d9b, type: 3}
   m_Name: 
@@ -6559,7 +6581,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649637282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 96f8a154aa5bb1247aeec1ec3932eb72, type: 3}
   m_Name: 
