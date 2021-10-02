@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1627,7 +1627,6 @@ GameObject:
   m_Component:
   - component: {fileID: 325207779}
   - component: {fileID: 325207781}
-  - component: {fileID: 325207780}
   - component: {fileID: 325207782}
   m_Layer: 0
   m_Name: ColliderBucket
@@ -1650,27 +1649,6 @@ Transform:
   m_Father: {fileID: 823505418}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &325207780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 325207778}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f8a154aa5bb1247aeec1ec3932eb72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cup: {fileID: 823505414}
-  cup1: {fileID: 1769180560}
-  color: blue
-  x1: -4
-  y1: -9.5
-  z1: 12.11
-  x2: -3.86
-  y2: -0.3899994
-  z2: 2.41
 --- !u!65 &325207781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6565,7 +6543,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1649637285}
   - component: {fileID: 1649637284}
-  - component: {fileID: 1649637283}
   - component: {fileID: 1649637286}
   m_Layer: 0
   m_Name: ColliderBucket
@@ -6574,27 +6551,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1649637283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1649637282}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96f8a154aa5bb1247aeec1ec3932eb72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cup: {fileID: 1305296205}
-  cup1: {fileID: 158744343}
-  color: green
-  x1: -8.65
-  y1: -9.5
-  z1: 12.11
-  x2: -4.46
-  y2: -0.3899994
-  z2: 2.41
 --- !u!65 &1649637284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8396,6 +8352,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5575484ab1fa43648ba8aab5ca8431ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  point: 0
+  plane: {fileID: 1534736174}
 --- !u!114 &2131870146
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Points : MonoBehaviour
 {
-    public static int point;
+    public int point;
+
+    public GameObject plane;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +18,6 @@ public class Points : MonoBehaviour
     void Update()
     {
         Debug.Log("Points: " + point);
+        plane.transform.position = new Vector3(-1.966059f, -8.89f, -5.946551f);
     }
 }

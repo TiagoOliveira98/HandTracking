@@ -37,7 +37,7 @@ public class ColliderCheck : MonoBehaviour
         if (other.gameObject.tag == "Grabbable" || other.gameObject.tag == color)
         {
             droppedObject = other.gameObject;
-            Points.point += 1;
+            //Points.point += 1;
             //points += 1;
             Destroy(droppedObject);
             SceneManager.LoadScene("Level2");
