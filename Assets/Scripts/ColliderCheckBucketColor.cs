@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class ColliderCheckBucketColor : MonoBehaviour
@@ -13,6 +14,8 @@ public class ColliderCheckBucketColor : MonoBehaviour
     GameObject find, clone;
     GameObject cameras;
     Points points;
+
+    public Text Text;
 
     public string color;
 
@@ -33,6 +36,7 @@ public class ColliderCheckBucketColor : MonoBehaviour
     void Update()
     {
         Debug.Log("Points: " + points.point);
+        Text.GetComponent<Text>().text = "Points: " + points.point;
         cup.transform.position = new Vector3(x1, y1, z1);
         cup1.transform.localPosition = new Vector3(x2, y2, z2);
         cup.transform.eulerAngles = new Vector3(0, 0, 0);
