@@ -29,27 +29,27 @@ public class HandConnection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        x1 = point1.transform.position.x;
-        y1 = point1.transform.position.y;
-        z1 = point1.transform.position.z;
+        v1.x = point1.transform.position.x;
+        v1.y = point1.transform.position.y;
+        v1.z = point1.transform.position.z;
 
-        x2 = point2.transform.position.x;
-        y2 = point2.transform.position.y;
-        z2 = point2.transform.position.z;
+        v2.x = point2.transform.position.x;
+        v2.y = point2.transform.position.y;
+        v2.z = point2.transform.position.z;
 
-        x3 = point3.transform.position.x;
-        y3 = point3.transform.position.y;
-        z3 = point3.transform.position.z;
+        v3.x = point3.transform.position.x;
+        v3.y = point3.transform.position.y;
+        v3.z = point3.transform.position.z;
 
-        x4 = point4.transform.position.x;
-        y4 = point4.transform.position.y;
-        z4 = point4.transform.position.z;
+        v4.x = point4.transform.position.x;
+        v4.y = point4.transform.position.y;
+        v4.z = point4.transform.position.z;
 
-        x5 = point5.transform.position.x;
-        y5 = point5.transform.position.y;
-        z5 = point5.transform.position.z;
+        v5.x = point5.transform.position.x;
+        v5.y = point5.transform.position.y;
+        v5.z = point5.transform.position.z;
 
-        v1.x = x1;
+        /*v1.x = x1;
         v1.y = y1;
         v1.z = z1;
         v2.x = x2;
@@ -63,7 +63,7 @@ public class HandConnection : MonoBehaviour
         v4.z = z4;
         v5.x = x5;
         v5.y = y5;
-        v5.z = z5;
+        v5.z = z5;*/
 
 
         lr.SetPosition(0, v1);

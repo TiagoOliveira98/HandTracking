@@ -70,6 +70,10 @@ public class ReceiveHandData : MonoBehaviour {
 
     public GameObject GrabPointRight, GrabPointLeft;
 
+    /*GameObject find, clone, clone2;*/
+
+    public GameObject rightHand, leftHand;
+
     //public GameObject cup, cup1;
 
     /*int check1;
@@ -86,8 +90,21 @@ public class ReceiveHandData : MonoBehaviour {
         gain = 10;
         Mirror = -1;// set -1 for mirroring, else set 1
 
-    //    foreach (KeyValuePair<string, float> mark in handLandmarks)
-    //        Debug.LogFormat("Key: {0}, Value: {1}", mark.Key, mark.Value);
+        //    foreach (KeyValuePair<string, float> mark in handLandmarks)
+        //        Debug.LogFormat("Key: {0}, Value: {1}", mark.Key, mark.Value);
+        /*find = GameObject.Find("RightHand");
+        clone = Instantiate(find);
+        Destroy(rightHand);
+        clone.name = "RightHand";
+
+        find = GameObject.Find("LeftHand");
+        clone2 = Instantiate(find);
+        Destroy(leftHand);
+        clone2.name = "LeftHand";*/
+        leftHand.SetActive(false);
+        rightHand.SetActive(false);
+        leftHand.SetActive(true);
+        rightHand.SetActive(true);
 
     }
 
