@@ -20,5 +20,7 @@ public class Color : MonoBehaviour
             GetComponent<MeshRenderer>().material = green;
             tag = "green";
         }
+
+        transform.position = new Vector3(0.6f, -5.67f, 1.8f);
     }
 }
