@@ -5,6 +5,8 @@ A test project transfering hand tracking from Python CV (https://google.github.i
 
 ![enter image description here](https://raw.githubusercontent.com/athanoid/HandTrackCV2Unity/main/opencvunity.gif)
 
+It is provided a short video of the grabbibg interaction from one of the first versions of the project
+
 # Prereqs
 
     pip install opencv-python
