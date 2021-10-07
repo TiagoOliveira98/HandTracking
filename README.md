@@ -14,11 +14,11 @@ A test project transfering hand tracking from Python CV (https://google.github.i
 # Run
 ### win64
 
-#### Run the python file located in teh directory ./HandTracking/Python_Client
+#### Run the python file located in the directory ./HandTracking/Python_Client
 
     python openCVhandtrack.py
 
-#### Run the main scene in teh Unity project provided in the repository
+#### Run the main scene in the Unity project provided in the repository
 
 ---
 > ! This project is affected by constant changes
