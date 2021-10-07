@@ -8,21 +8,18 @@ A test project transfering hand tracking from Python CV (https://google.github.i
 # Prereqs
 
     pip install opencv-python
-    
+
     pip install mediapipe
 
-# Run 
+# Run
 ### win64
 
-> [RunDemo.bat](https://github.com/athanoid/HandTrackCV2Unity/blob/main/RunDemo.bat
-> "RunDemo.bat")
+#### Run the python file located in teh directory ./HandTracking/Python_Client
 
-### linux64
+    python openCVhandtrack.py
 
-    sudo chmod +x RunDemo.sh
-
-    ./RunDemo.sh
+#### Run the main scene in teh Unity project provided in the repository
 
 ---
-> ! This project is not actively maintained
+> ! This project is affected by constant changes
 ---

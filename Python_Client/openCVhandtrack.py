@@ -31,7 +31,7 @@ def calculate_angle_right(image, results, joint_list):
         if angle1 < 110:
             closedFingersRight+=1;
 
-        cv2.putText(image, str(round(angle1, 2)), tuple(np.multiply(b1, [640, 480]).astype(int)),
+        cv2.putText(image, str(round(angle1, 2)), tuple(np.multiply(b1, [1920, 1080]).astype(int)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
     if closedFingersRight >= 4:
@@ -58,7 +58,7 @@ def calculate_angle_left(image, results, joint_list):
         if angle2 < 110:
             closedFingersLeft+=1;
 
-        cv2.putText(image, str(round(angle2, 2)), tuple(np.multiply(b2, [640, 480]).astype(int)),
+        cv2.putText(image, str(round(angle2, 2)), tuple(np.multiply(b2, [1920, 1080]).astype(int)),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
     if closedFingersLeft >= 4:
@@ -78,7 +78,11 @@ sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Create Video object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
+width = 1920
+height = 1080
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 # Formality we have to write before start
 # using this model
 #mpHands = mp.solutions.hands
