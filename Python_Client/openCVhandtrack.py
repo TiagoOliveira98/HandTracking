@@ -90,11 +90,11 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 mp_holistic = mp.solutions.holistic
 #hands = mpHands.Hands()
 # creating an object to draw hand landmarks
-mpDraw = mp.solutions.drawing_utils
+########################mpDraw = mp.solutions.drawing_utils
 # Previous time for frame rate
-pTime = 0
+###############pTime = 0
 # Current time for frame rate
-cTime = 0
+####################cTime = 0
 
 joint_list = [[7,6,5], [11,10,9], [15,14,13], [19,18,17], [4,3,2]]
 
@@ -118,19 +118,19 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
                 sock.sendto(coord_struct, (UDP_IP, UDP_PORT))
                 # Height, width and channel of image
-                h, w, c = img.shape
+                #############h, w, c = img.shape
                 # X and Y coordinate
                 # their values in decimal so
                 # we have to convert into pixel
-                cx, cy = int(results.right_hand_landmarks.landmark[i].x*w),int(results.right_hand_landmarks.landmark[i].y*h)
+                #############cx, cy = int(results.right_hand_landmarks.landmark[i].x*w),int(results.right_hand_landmarks.landmark[i].y*h)
                 #print(id, cx, cy)
                 #if id ==4:
-                cv2.circle(img, (cx, cy), 7, (255,0,255), cv2.FILLED)
+                ###########cv2.circle(img, (cx, cy), 7, (255,0,255), cv2.FILLED)
             # 2. Right hand
-            mpDraw.draw_landmarks(img, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                                     mpDraw.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4),
-                                     mpDraw.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
-                                     )
+            ##########mpDraw.draw_landmarks(img, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
+                                     #######mpDraw.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4),
+                                     #########mpDraw.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
+                                     #########)
 
 
 
@@ -142,34 +142,34 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
                 sock.sendto(coord_struct, (UDP_IP, UDP_PORT))
                 # Height, width and channel of image
-                h, w, c = img.shape
+                ##############h, w, c = img.shape
                 # X and Y coordinate
                 # their values in decimal so
                 # we have to convert into pixel
-                cx, cy = int(results.left_hand_landmarks.landmark[i].x*w),int(results.left_hand_landmarks.landmark[i].y*h)
+                ###############cx, cy = int(results.left_hand_landmarks.landmark[i].x*w),int(results.left_hand_landmarks.landmark[i].y*h)
                 #print(id, cx, cy)
                 #if id ==4:
-                cv2.circle(img, (cx, cy), 7, (255,0,255), cv2.FILLED)
+                #########cv2.circle(img, (cx, cy), 7, (255,0,255), cv2.FILLED)
             # 2. Left hand
-            mpDraw.draw_landmarks(img, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                                     mpDraw.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4),
-                                     mpDraw.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
-                                     )
+            #############mpDraw.draw_landmarks(img, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
+                                     #############mpDraw.DrawingSpec(color=(121,22,76), thickness=2, circle_radius=4),
+                                     ##############mpDraw.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
+                                     ##########)
 
 
         # Getting the current time
-        cTime = time.time()
+        #########cTime = time.time()
         # Getting frame per second
-        fps = 1/(cTime-pTime)
+        ###########fps = 1/(cTime-pTime)
         # Previous time become current time
-        pTime = cTime
+        ###########pTime = cTime
         # Labeling the Frame rate
-        cv2.putText(img,str(int(fps)),(10,70),cv2.FONT_HERSHEY_PLAIN,3,
-                                (255,0,255),3)
+        ##########cv2.putText(img,str(int(fps)),(10,70),cv2.FONT_HERSHEY_PLAIN,3,
+                                ##################(255,0,255),3)
 
-        cv2.imshow('Raw Webcam Feed', img)
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
+        ###########cv2.imshow('Raw Webcam Feed', img)
+        ##########if cv2.waitKey(10) & 0xFF == ord('q'):
+            ###########break
 
 
 

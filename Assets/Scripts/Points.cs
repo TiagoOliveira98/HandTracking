@@ -18,7 +18,7 @@ public class Points : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Points: " + point);
+        //Debug.Log("Points: " + point);
         plane.transform.position = new Vector3(-1.966059f, -8.89f, -5.946551f);
     }
 }
