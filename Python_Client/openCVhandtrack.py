@@ -35,7 +35,7 @@ def calculate_angle_right(image, results, joint_list):
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
     if closedFingersRight >= 4:
-        print("Right Hand Close")
+        #print("Right Hand Close")
         return 1
 
     return 0
@@ -62,7 +62,7 @@ def calculate_angle_left(image, results, joint_list):
                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
 
     if closedFingersLeft >= 4:
-        print("Left Hand Close")
+        #print("Left Hand Close")
         return 1
 
     return 0
@@ -78,7 +78,7 @@ sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Create Video object
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 width = 1920
 height = 1080
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)

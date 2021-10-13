@@ -49,23 +49,6 @@ public class HandConnection : MonoBehaviour
         v5.y = point5.transform.position.y;
         v5.z = point5.transform.position.z;
 
-        /*v1.x = x1;
-        v1.y = y1;
-        v1.z = z1;
-        v2.x = x2;
-        v2.y = y2;
-        v2.z = z2;
-        v3.x = x3;
-        v3.y = y3;
-        v3.z = z3;
-        v4.x = x4;
-        v4.y = y4;
-        v4.z = z4;
-        v5.x = x5;
-        v5.y = y5;
-        v5.z = z5;*/
-
-
         lr.SetPosition(0, v1);
         lr.SetPosition(1, v2);
         lr.SetPosition(2, v3);

@@ -12,13 +12,14 @@ public class Points : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Start the points with 0
         point = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Points: " + point);
+        //To keep the coordinates from the plane
         plane.transform.position = new Vector3(-1.966059f, -8.89f, -5.946551f);
     }
 }
