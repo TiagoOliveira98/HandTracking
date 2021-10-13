@@ -5,9 +5,13 @@ A test project transfering hand tracking from Python CV (https://google.github.i
 
 ![enter image description here](https://raw.githubusercontent.com/athanoid/HandTrackCV2Unity/main/opencvunity.gif)
 
-It is provided a short video of the grabbibg interaction from one of the first versions of the project in the file
+It is provided a short video of the grabbing interaction from one of the first versions of the project in the file
 
     HandTrack.mp4
+
+It is also provided a short demonstration of the first stage of development of the full interaction with the game objects
+
+    HandTracking_Demo.mp4
 
 # Prereqs
 

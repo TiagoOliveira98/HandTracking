@@ -60,7 +60,7 @@ public class ReceiveHandData : MonoBehaviour {
 
     //Vector3 grabPosition;
 
-    public float gain = 10;
+    public float gain = 15;
     public float gain2 = 3.5f;
 
     private int mirror;
@@ -74,6 +74,8 @@ public class ReceiveHandData : MonoBehaviour {
     /*GameObject find, clone, clone2;*/
 
     public GameObject rightHand, leftHand;
+
+    public GameObject grabRight, grabLeft;
 
     //public GameObject cup, cup1;
 
@@ -89,7 +91,7 @@ public class ReceiveHandData : MonoBehaviour {
     {
         init();
         
-        gain = 10; //Gain for the hands
+        gain = 15; //Gain for the hands
         Mirror = -1; // set -1 for mirroring, else set 1
 
         //To fix a bug
@@ -97,6 +99,10 @@ public class ReceiveHandData : MonoBehaviour {
         rightHand.SetActive(false);
         leftHand.SetActive(true);
         rightHand.SetActive(true);
+        grabLeft.SetActive(false);
+        grabRight.SetActive(false);
+        grabLeft.SetActive(true);
+        grabRight.SetActive(true);
 
         //Values of the references from the calibration
         ref1 = Calibration.distRef;
@@ -107,12 +113,12 @@ public class ReceiveHandData : MonoBehaviour {
         addRight = 0f;
 
 
-        float x1 = 0;
-        float x2 = 0;
-        float y1 = 0;
-        float y2 = 0;
-        float z1 = 0;
-        float z2 = 0;
+        x1 = 0;
+        x2 = 0;
+        y1 = 0;
+        y2 = 0;
+        z1 = 0;
+        z2 = 0;
 
         /*Vector3 addR = new Vector3(0f, 0f, addRight);
         Vector3 addL = new Vector3(0f, 0f, addLeft);*/
