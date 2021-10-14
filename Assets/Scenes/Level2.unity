@@ -2429,6 +2429,49 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470434580}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &471972716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 471972718}
+  - component: {fileID: 471972717}
+  m_Layer: 0
+  m_Name: Logging
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &471972717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471972716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd5224fefd67c2479adfe5f9449346e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &471972718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471972716}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.296933, y: 1.3083147, z: 3.0877135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &523043642
 GameObject:
   m_ObjectHideFlags: 0
@@ -8712,11 +8755,15 @@ MonoBehaviour:
   PINKY_TIP2: {fileID: 1646565745}
   gain: 10
   gain2: 3.5
+  gain3: 0
   newdata: []
   GrabPointRight: {fileID: 1811532477}
   GrabPointLeft: {fileID: 1862985022}
   rightHand: {fileID: 864170591}
   leftHand: {fileID: 416853630}
+  grabRight: {fileID: 0}
+  grabLeft: {fileID: 0}
+  log: {fileID: 471972716}
   ref1: 0
   ref2: 0
 --- !u!81 &2131870147

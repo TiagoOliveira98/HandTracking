@@ -11,9 +11,9 @@ public class DataLogs : MonoBehaviour
     void Start()
     {
         string path = Directory.GetCurrentDirectory();
-        path += @"\Debugs\Debugs(0).txt";
+        path += @"\DataLogging\Logs(0).txt";
 
-        Directory.CreateDirectory("Debugs");
+        Directory.CreateDirectory("DataLogging");
         if (!File.Exists(path))
         {
             fileWriter = File.CreateText(path);
@@ -23,7 +23,7 @@ public class DataLogs : MonoBehaviour
             for (int i = 1; i < 200; i++)
             {
                 path = Directory.GetCurrentDirectory();
-                path += @"\Debugs\Debugs" + "(" + i.ToString() + ").txt";
+                path += @"\DataLogging\Logs" + "(" + i.ToString() + ").txt";
                 if (!File.Exists(path))
                 {
                     fileWriter = File.CreateText(path);
