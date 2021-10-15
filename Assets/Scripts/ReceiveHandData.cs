@@ -61,7 +61,7 @@ public class ReceiveHandData : MonoBehaviour {
     //Vector3 grabPosition;
 
     public float gain = 15;
-    public float gain2 = 4/*3.5f*/;
+    public float gain2 = 4;
     public float gain3;
 
     private int mirror;
@@ -71,25 +71,20 @@ public class ReceiveHandData : MonoBehaviour {
     float rightHandClosed, leftHandClosed;
 
     public GameObject GrabPointRight, GrabPointLeft;
-
-    /*GameObject find, clone, clone2;*/
-
     public GameObject rightHand, leftHand;
-
     public GameObject grabRight, grabLeft;
 
     string line;
 
     public GameObject log;
 
-    //public GameObject cup, cup1;
-
     float dist, dist2;
     public float ref1, ref2;
     float addLeft, addRight;
-    Vector3 addR,addL;
 
     float x1, x2, y1, y2, z1, z2;
+
+    float wristRightX, wristLeftX;
 
     // start
     public void Start()
@@ -105,10 +100,10 @@ public class ReceiveHandData : MonoBehaviour {
         rightHand.SetActive(false);
         leftHand.SetActive(true);
         rightHand.SetActive(true);
-        grabLeft.SetActive(false);
-        grabRight.SetActive(false);
-        grabLeft.SetActive(true);
-        grabRight.SetActive(true);
+        GrabPointLeft.SetActive(false);
+        GrabPointRight.SetActive(false);
+        GrabPointLeft.SetActive(true);
+        GrabPointRight.SetActive(true);
 
         //Values of the references from the calibration
         ref1 = Calibration.distRef;
@@ -124,6 +119,9 @@ public class ReceiveHandData : MonoBehaviour {
         y2 = 0;
         z1 = 0;
         z2 = 0;
+
+        wristRightX = 0f;
+        wristLeftX = 0f;
     }
 
 
@@ -154,84 +152,85 @@ public class ReceiveHandData : MonoBehaviour {
             addLeft = ref2 - dist2;
         }
 
-        //WRIST.transform.position = (p0pos * Mirror);
+        //Update the coordinates of each joint from both hands
+        //RIGHT HAND
+        //WRIST
         WRIST.transform.position = (new Vector3(p0pos.x + gain3, p0pos.y, p0pos.z + gain2 * addRight))*Mirror;
-        WRIST.transform.eulerAngles = new Vector3(0, 0, 0);
-        //WRIST.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        //WRIST.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        //THUMB_CMC.transform.position = (p1pos /*- p0pos*/) * Mirror;
+        //WRIST.transform.eulerAngles = new Vector3(0, 0, 0);
+        
+        //THUMB
         THUMB_CMC.transform.position = (new Vector3(p1pos.x + gain3, p1pos.y, p1pos.z + gain2 * addRight)) * Mirror;
-        THUMB_CMC.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_MCP.transform.position = (p2pos /*- p1pos*/) * Mirror;
+        //THUMB_CMC.transform.eulerAngles = new Vector3(0, 0, 0);
+      
         THUMB_MCP.transform.position = (new Vector3(p2pos.x + gain3, p2pos.y, p2pos.z + gain2 * addRight)) * Mirror;
-        THUMB_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_IP.transform.position = (p3pos /*- p2pos*/) * Mirror;
+        //THUMB_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+       
         THUMB_IP.transform.position = (new Vector3(p3pos.x + gain3, p3pos.y, p3pos.z + gain2 * addRight)) * Mirror;
-        THUMB_IP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_TIP.transform.position = (p4pos /*- p3pos*/) * Mirror;
+        //THUMB_IP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         THUMB_TIP.transform.position = (new Vector3(p4pos.x + gain3, p4pos.y, p4pos.z + gain2 * addRight)) * Mirror;
-        THUMB_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        //THUMB_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //INDEX_FINGER_MCP.transform.position = (p5pos /*- p0pos*/) * Mirror;
+        //INDEX FINGER
         INDEX_FINGER_MCP.transform.position = (new Vector3(p5pos.x + gain3, p5pos.y, p5pos.z + gain2 * addRight)) * Mirror;
-        INDEX_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_PIP.transform.position = (p6pos /*- p5pos*/) * Mirror;
+        //INDEX_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         INDEX_FINGER_PIP.transform.position = (new Vector3(p6pos.x + gain3, p6pos.y, p6pos.z + gain2 * addRight)) * Mirror;
-        INDEX_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_DIP.transform.position = (p7pos /*- p6pos*/) * Mirror;
+        //INDEX_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         INDEX_FINGER_DIP.transform.position = (new Vector3(p7pos.x + gain3, p7pos.y, p7pos.z + gain2 * addRight)) * Mirror;
-        INDEX_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_TIP.transform.position = (p8pos/* - p7pos*/) * Mirror;
+        //INDEX_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+     
         INDEX_FINGER_TIP.transform.position = (new Vector3(p8pos.x + gain3, p8pos.y, p8pos.z + gain2 * addRight)) * Mirror;
-        INDEX_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        //INDEX_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //MIDDLE_FINGER_MCP.transform.position = (p9pos /*- p0pos*/) * Mirror;
+        //MIDDLE FINGER
         MIDDLE_FINGER_MCP.transform.position = (new Vector3(p9pos.x + gain3, p9pos.y, p9pos.z + gain2 * addRight)) * Mirror;
-        MIDDLE_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_PIP.transform.position = (p10pos /*- p9pos*/) * Mirror;
+        //MIDDLE_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+      
         MIDDLE_FINGER_PIP.transform.position = (new Vector3(p10pos.x + gain3, p10pos.y, p10pos.z + gain2 * addRight)) * Mirror;
-        MIDDLE_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_DIP.transform.position = (p11pos /*- p10pos*/) * Mirror;
+        //MIDDLE_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+       
         MIDDLE_FINGER_DIP.transform.position = (new Vector3(p11pos.x + gain3, p11pos.y, p11pos.z + gain2 * addRight)) * Mirror;
-        MIDDLE_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_TIP.transform.position = (p12pos/* - p11pos*/) * Mirror;
+        //MIDDLE_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         MIDDLE_FINGER_TIP.transform.position = (new Vector3(p12pos.x + gain3, p12pos.y, p12pos.z + gain2 * addRight)) * Mirror;
-        MIDDLE_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        //MIDDLE_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //RING_FINGER_MCP.transform.position = (p13pos /*- p0pos*/) * Mirror;
+        //RING FINGER
         RING_FINGER_MCP.transform.position = (new Vector3(p13pos.x + gain3, p13pos.y, p13pos.z + gain2 * addRight)) * Mirror;
-        RING_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_PIP.transform.position = (p14pos /*- p13pos*/) * Mirror;
+        //RING_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         RING_FINGER_PIP.transform.position = (new Vector3(p14pos.x + gain3, p14pos.y, p14pos.z + gain2 * addRight)) * Mirror;
-        RING_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_DIP.transform.position = (p15pos /*-p14pos*/) * Mirror;
+        //RING_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         RING_FINGER_DIP.transform.position = (new Vector3(p15pos.x + gain3, p15pos.y, p15pos.z + gain2 * addRight)) * Mirror;
-        RING_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_TIP.transform.position = (p16pos /*- p15pos*/) * Mirror;
+        //RING_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         RING_FINGER_TIP.transform.position = (new Vector3(p16pos.x + gain3, p16pos.y, p16pos.z + gain2 * addRight)) * Mirror;
-        RING_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        //RING_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //PINKY_MCP.transform.position = (p17pos /*- p0pos*/) * Mirror;
+        //PINKY
         PINKY_MCP.transform.position = (new Vector3(p17pos.x + gain3, p17pos.y, p17pos.z + gain2 * addRight)) * Mirror;
-        PINKY_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_PIP.transform.position = (p18pos /*- p17pos*/) * Mirror;
+        //PINKY_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_PIP.transform.position = (new Vector3(p18pos.x + gain3, p18pos.y, p18pos.z + gain2 * addRight)) * Mirror;
-        PINKY_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_DIP.transform.position = (p19pos /*- p18pos*/) * Mirror;
+        //PINKY_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_DIP.transform.position = (new Vector3(p19pos.x + gain3, p19pos.y, p19pos.z + gain2 * addRight)) * Mirror;
-        PINKY_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_TIP.transform.position = (p20pos /*-p19pos*/) * Mirror;
+        //PINKY_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_TIP.transform.position = (new Vector3(p20pos.x + gain3, p20pos.y, p20pos.z + gain2 * addRight)) * Mirror;
-        PINKY_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+        //PINKY_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
 
+        //COORDINATES FOR THE GRABBING POINT
         float centerXright = (PINKY_TIP.transform.position[0]*0.15f + RING_FINGER_TIP.transform.position[0]*0.15f + MIDDLE_FINGER_TIP.transform.position[0]*0.25f + INDEX_FINGER_TIP.transform.position[0]*0.15f + THUMB_TIP.transform.position[0]*0.3f) /*/ 5.0f*/;
         float centerYright = (PINKY_TIP.transform.position[1]*0.15f + RING_FINGER_TIP.transform.position[1]*0.15f + MIDDLE_FINGER_TIP.transform.position[1]*0.25f + INDEX_FINGER_TIP.transform.position[1]*0.15f + THUMB_TIP.transform.position[1]*0.3f) /*/ 5.0f*/;
         float centerZright = (PINKY_TIP.transform.position[2]*0.15f + RING_FINGER_TIP.transform.position[2]*0.15f + MIDDLE_FINGER_TIP.transform.position[2]*0.25f + INDEX_FINGER_TIP.transform.position[2]*0.15f + THUMB_TIP.transform.position[2]*0.3f) /*/ 5.0f*/;
-
         GrabPointRight.transform.position = new Vector3(centerXright, centerYright, centerZright);
 
-        if(rightHandClosed == 1)
+        //Change the tag to Closed or Open
+        if (rightHandClosed == 1)
         {
             GrabPointRight.tag = "Closed";
         }
@@ -240,83 +239,83 @@ public class ReceiveHandData : MonoBehaviour {
             GrabPointRight.tag = "Open";
         }
 
-        //WRIST.transform.position = (p0pos * Mirror);
+        //LEFT HAND
+        //WRIST
         WRIST2.transform.position = (new Vector3(p0pos2.x + gain3, p0pos2.y, p0pos2.z + gain2 * addLeft)) * Mirror;
-        WRIST2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //WRIST.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-        //WRIST.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-
-        //THUMB_CMC.transform.position = (p1pos /*- p0pos*/) * Mirror;
+        //WRIST2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
+        //THUMB
         THUMB_CMC2.transform.position = (new Vector3(p1pos2.x + gain3, p1pos2.y, p1pos2.z + gain2 * addLeft)) * Mirror;
-        THUMB_CMC2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_MCP.transform.position = (p2pos /*- p1pos*/) * Mirror;
+        //THUMB_CMC2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         THUMB_MCP2.transform.position = (new Vector3(p2pos2.x + gain3, p2pos2.y, p2pos2.z + gain2 * addLeft)) * Mirror;
-        THUMB_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_IP.transform.position = (p3pos /*- p2pos*/) * Mirror;
+        //THUMB_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         THUMB_IP2.transform.position = (new Vector3(p3pos2.x + gain3, p3pos2.y, p3pos2.z + gain2 * addLeft)) * Mirror;
-        THUMB_IP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //THUMB_TIP.transform.position = (p4pos /*- p3pos*/) * Mirror;
+        //THUMB_IP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         THUMB_TIP2.transform.position = (new Vector3(p4pos2.x + gain3, p4pos2.y, p4pos2.z + gain2 * addLeft)) * Mirror;
-        THUMB_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        //THUMB_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //INDEX_FINGER_MCP.transform.position = (p5pos /*- p0pos*/) * Mirror;
+        //INDEX FINGER
         INDEX_FINGER_MCP2.transform.position = (new Vector3(p5pos2.x + gain3, p5pos2.y, p5pos2.z + gain2 * addLeft)) * Mirror;
-        INDEX_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_PIP.transform.position = (p6pos /*- p5pos*/) * Mirror;
+        //INDEX_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+       
         INDEX_FINGER_PIP2.transform.position = (new Vector3(p6pos2.x + gain3, p6pos2.y, p6pos2.z + gain2 * addLeft)) * Mirror;
-        INDEX_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_DIP.transform.position = (p7pos /*- p6pos*/) * Mirror;
+        //INDEX_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         INDEX_FINGER_DIP2.transform.position = (new Vector3(p7pos2.x + gain3, p7pos2.y, p7pos2.z + gain2 * addLeft)) * Mirror;
-        INDEX_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //INDEX_FINGER_TIP.transform.position = (p8pos/* - p7pos*/) * Mirror;
+        //INDEX_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         INDEX_FINGER_TIP2.transform.position = (new Vector3(p8pos2.x + gain3, p8pos2.y, p8pos2.z + gain2 * addLeft)) * Mirror;
-        INDEX_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        //INDEX_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //MIDDLE_FINGER_MCP.transform.position = (p9pos /*- p0pos*/) * Mirror;
+        //MIDDLE FINGER
         MIDDLE_FINGER_MCP2.transform.position = (new Vector3(p9pos2.x + gain3, p9pos2.y, p9pos2.z + gain2 * addLeft)) * Mirror;
-        MIDDLE_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_PIP.transform.position = (p10pos /*- p9pos*/) * Mirror;
+        //MIDDLE_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         MIDDLE_FINGER_PIP2.transform.position = (new Vector3(p10pos2.x + gain3, p10pos2.y, p10pos2.z + gain2 * addLeft)) * Mirror;
-        MIDDLE_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_DIP.transform.position = (p11pos /*- p10pos*/) * Mirror;
+        //MIDDLE_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         MIDDLE_FINGER_DIP2.transform.position = (new Vector3(p11pos2.x + gain3, p11pos2.y, p11pos2.z + gain2 * addLeft)) * Mirror;
-        MIDDLE_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //MIDDLE_FINGER_TIP.transform.position = (p12pos/* - p11pos*/) * Mirror;
+        //MIDDLE_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         MIDDLE_FINGER_TIP2.transform.position = (new Vector3(p12pos2.x + gain3, p12pos2.y, p12pos2.z + gain2 * addLeft)) * Mirror;
-        MIDDLE_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        //MIDDLE_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //RING_FINGER_MCP.transform.position = (p13pos /*- p0pos*/) * Mirror;
+        //RING FINGER
         RING_FINGER_MCP2.transform.position = (new Vector3(p13pos2.x + gain3, p13pos2.y, p13pos2.z + gain2 * addLeft)) * Mirror;
-        RING_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_PIP.transform.position = (p14pos /*- p13pos*/) * Mirror;
+        //RING_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         RING_FINGER_PIP2.transform.position = (new Vector3(p14pos2.x + gain3, p14pos2.y, p14pos2.z + gain2 * addLeft)) * Mirror;
-        RING_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_DIP.transform.position = (p15pos /*-p14pos*/) * Mirror;
+        //RING_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         RING_FINGER_DIP2.transform.position = (new Vector3(p15pos2.x + gain3, p15pos2.y, p15pos2.z + gain2 * addLeft)) * Mirror;
-        RING_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //RING_FINGER_TIP.transform.position = (p16pos /*- p15pos*/) * Mirror;
+        //RING_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
         RING_FINGER_TIP2.transform.position = (new Vector3(p16pos2.x + gain3, p16pos2.y, p16pos2.z + gain2 * addLeft)) * Mirror;
-        RING_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        //RING_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
 
-        //PINKY_MCP.transform.position = (p17pos /*- p0pos*/) * Mirror;
+        //PINKY
         PINKY_MCP2.transform.position = (new Vector3(p17pos2.x + gain3, p17pos2.y, p17pos2.z + gain2 * addLeft)) * Mirror;
-        PINKY_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_PIP.transform.position = (p18pos /*- p17pos*/) * Mirror;
+        //PINKY_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_PIP2.transform.position = (new Vector3(p18pos2.x + gain3, p18pos2.y, p18pos2.z + gain2 * addLeft)) * Mirror;
-        PINKY_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_DIP.transform.position = (p19pos /*- p18pos*/) * Mirror;
+        //PINKY_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_DIP2.transform.position = (new Vector3(p19pos2.x + gain3, p19pos2.y, p19pos2.z + gain2 * addLeft)) * Mirror;
-        PINKY_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        //PINKY_TIP.transform.position = (p20pos /*-p19pos*/) * Mirror;
+        //PINKY_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        
         PINKY_TIP2.transform.position = (new Vector3(p20pos2.x + gain3, p20pos2.y, p20pos2.z + gain2 * addLeft)) * Mirror;
-        PINKY_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+        //PINKY_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
 
+        //COORDINATES FOR THE GRABBING POINT
         float centerXleft = (PINKY_TIP2.transform.position[0] * 0.15f + RING_FINGER_TIP2.transform.position[0] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[0] * 0.25f + INDEX_FINGER_TIP2.transform.position[0] * 0.15f + THUMB_TIP2.transform.position[0] * 0.3f) /*/ 5.0f*/;
         float centerYleft = (PINKY_TIP2.transform.position[1] * 0.15f + RING_FINGER_TIP2.transform.position[1] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[1] * 0.25f + INDEX_FINGER_TIP2.transform.position[1] * 0.15f + THUMB_TIP2.transform.position[1] * 0.3f) /*/ 5.0f*/;
         float centerZleft = (PINKY_TIP2.transform.position[2] * 0.15f + RING_FINGER_TIP2.transform.position[2] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[2] * 0.25f + INDEX_FINGER_TIP2.transform.position[2] * 0.15f + THUMB_TIP2.transform.position[2] * 0.3f) /*/ 5.0f*/;
-
         GrabPointLeft.transform.position = new Vector3(centerXleft, centerYleft, centerZleft);
 
+        //Change the tag to Closed or Open
         if (leftHandClosed == 1)
         {
             GrabPointLeft.tag = "Closed";
@@ -327,7 +326,7 @@ public class ReceiveHandData : MonoBehaviour {
         }
 
         //Logging Data
-        if (GameObject.Find("BucketBlue") != null)
+        if (GameObject.Find("BucketBlue") != null && wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x)
         {
             //Right Hand
             line += WRIST.transform.position.x.ToString() + "/" + WRIST.transform.position.y.ToString() + "/" + WRIST.transform.position.z.ToString();
@@ -388,6 +387,9 @@ public class ReceiveHandData : MonoBehaviour {
             log.GetComponent<DataLogs>().Log(line);
             line = "";
         }
+
+        wristRightX = WRIST.transform.position.x;
+        wristLeftX = WRIST2.transform.position.x;
     }
 
 

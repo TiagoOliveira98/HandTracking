@@ -43,8 +43,10 @@ public class DataLogs : MonoBehaviour
     {
             if (showTimeStamp)
             {
-                fileWriter.WriteLine(line + " at " + time.ToString("F2") + " seconds of game");
-            }
+                //fileWriter.WriteLine(line + " at " + time.ToString("F2") + " seconds of game");
+                //fileWriter.WriteLine(line + ";" + time.ToString("F3"));
+                fileWriter.WriteLine($"{line}; {time.ToString("F3")}");
+        }
             else
             {
                 fileWriter.WriteLine(line);
