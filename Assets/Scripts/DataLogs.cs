@@ -11,7 +11,7 @@ public class DataLogs : MonoBehaviour
     void Start()
     {
         string path = Directory.GetCurrentDirectory();
-        path += @"\DataLogging\Logs(0).txt";
+        path += @"\DataLogging\Logs(0).csv";
 
         Directory.CreateDirectory("DataLogging");
         if (!File.Exists(path))
@@ -23,7 +23,7 @@ public class DataLogs : MonoBehaviour
             for (int i = 1; i < 200; i++)
             {
                 path = Directory.GetCurrentDirectory();
-                path += @"\DataLogging\Logs" + "(" + i.ToString() + ").txt";
+                path += @"\DataLogging\Logs" + "(" + i.ToString() + ").csv";
                 if (!File.Exists(path))
                 {
                     fileWriter = File.CreateText(path);
@@ -44,9 +44,11 @@ public class DataLogs : MonoBehaviour
             if (showTimeStamp)
             {
                 //fileWriter.WriteLine(line + " at " + time.ToString("F2") + " seconds of game");
+                //line += ";" + time.ToString("F3");
+                //fileWriter.WriteLine(line);
                 //fileWriter.WriteLine(line + ";" + time.ToString("F3"));
                 fileWriter.WriteLine($"{line}; {time.ToString("F3")}");
-        }
+            }
             else
             {
                 fileWriter.WriteLine(line);
