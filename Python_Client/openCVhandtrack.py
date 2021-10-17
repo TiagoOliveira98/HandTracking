@@ -12,6 +12,7 @@ from struct import *
 
 from google.protobuf.json_format import MessageToDict
 
+import keyboard
 
 def calculate_angle_right(image, results, joint_list):
     closedFingersRight = 0;
@@ -156,7 +157,8 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                                      ##############mpDraw.DrawingSpec(color=(121,44,250), thickness=2, circle_radius=2)
                                      ##########)
 
-
+        if keyboard.is_pressed('q'):  # if key 'q' is pressed
+            quit(0)  # finishing the loop
         # Getting the current time
         #########cTime = time.time()
         # Getting frame per second
