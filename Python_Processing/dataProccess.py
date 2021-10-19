@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 
 #Get a list with all the files in the directory
 path = "../DataLogging/JointData"
+path1 = "../DataLogging/VelocityJoint"
+if os.path.exists(path1) == False:
+    os.mkdir(path1)
 list = os.listdir(path)
 
 nLines = 0
@@ -20,12 +23,15 @@ check = 0
 times = np.zeros(1)
 
 for file in list:
-    print(file)
+    print(file.replace('.csv', '') + '_Speed.csv')
 
+
+    fileDirectory2 = path1 + "/{}".format(file.replace('.csv', '') + '_Speed.csv')
     fileDirectory = path
     fileDirectory += "/{}".format(file)
 
     f = open(fileDirectory, "r")
+
 
     line1 = f.readline()
     line1 = f.readline()
@@ -76,64 +82,84 @@ for file in list:
     times = np.append(times,time2)
     print("Number of line in the file: ",nLines)
     print(speed.shape)
+    print(np.size(speed, 0))
 
     check = 0
 
-    for i in range(21):
-        plt.figure(1)
-        plt.plot( times[1:(nLines)], speed[:, i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
-        plt.ylabel('Velocity')
-        plt.xlabel('Time')
-        plt.title("Right Hand")
-        plt.legend()
+    f.close()
 
-        plt.figure(2)
-        plt.plot( times[1:(nLines)], speed[:, 21+i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
-        plt.ylabel('Velocity')
-        plt.xlabel('Time')
-        plt.title("Left Hand")
-        plt.legend()
+    f2 = open(fileDirectory2, "w")
+    for i in range(np.size(speed, 0)):
+        #Write in the file the info about the speed
+        line = str(speed[i][0])
+        for j in range(1,42):
+            line += (',' + str(speed[i][j]))
+        line += '\n'
+        f2.write(line)
+
+
+
+    #for i in range(21):
+        #plt.figure(1)
+        #plt.plot( times[1:(nLines)], speed[:, i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
+        #plt.ylabel('Velocity')
+        #plt.xlabel('Time')
+        #plt.title("Right Hand")
+        #plt.legend()
+
+        #plt.figure(2)
+        #plt.plot( times[1:(nLines)], speed[:, 21+i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
+        #plt.ylabel('Velocity')
+        #plt.xlabel('Time')
+        #plt.title("Left Hand")
+        #plt.legend()
 
     #Calculate the acceleration
-    iiii = np.size(speed, axis=0)
-    for i in range(np.size(speed, axis=0)-2):
-        for j in range(42):
-            if check < 42 :
-                acc[i][j] =  (speed[i+1][j]-speed[i][j])/(times[i+2]+times[i+1])
-                check += 1
-            else:
-                aux[0][j] = (speed[i+1][j]-speed[i][j])/(times[i+2]+times[i+1])
-        acc = np.vstack([acc,aux])
+    #iiii = np.size(speed, axis=0)
+    #for i in range(np.size(speed, axis=0)-2):
+        #for j in range(42):
+            #if check < 42 :
+                #acc[i][j] =  (speed[i+1][j]-speed[i][j])/(times[i+2]+times[i+1])
+                #check += 1
+            #else:
+                #aux[0][j] = (speed[i+1][j]-speed[i][j])/(times[i+2]+times[i+1])
+        #acc = np.vstack([acc,aux])
 
-    
-    for i in range(21):
-        plt.figure(3)
-        plt.plot( acc[:, i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
-        plt.ylabel('Acceleration')
-        plt.title("Right Hand")
-        plt.legend()
 
-        plt.figure(4)
-        plt.plot( acc[:, 21+i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
-        plt.ylabel('Acceleration')
-        plt.title("Left Hand")
-        plt.legend()
-                
+    #for i in range(21):
+        #plt.figure(3)
+        #plt.plot( acc[:, i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
+        #plt.ylabel('Acceleration')
+        #plt.title("Right Hand")
+        #plt.legend()
+
+        #plt.figure(4)
+        #plt.plot( acc[:, 21+i],marker='o',linestyle='dashed', linewidth=2, markersize=10, label='joint{}'.format(i))
+        #plt.ylabel('Acceleration')
+        #plt.title("Left Hand")
+        #plt.legend()
+
     #Jitter
-    jitter = np.zeros(np.size(acc, axis=0)-1)
-    for i in range(np.size(acc, axis=0)-1):
-        for j in range(42):
-            if (acc[i][j]*acc[i+1][j] < 0):
-                jitter[i] += 1
-            else:
-                if(jitter[i]!=0):
-                    jitter[i] += -1
-    plt.figure(5)
-    plt.plot( jitter,marker='o',linestyle='dashed', linewidth=2, markersize=10, label='Jitter')
-    plt.ylabel("Jitter")
-    
-    plt.show()
-    f.close()
+    #jitter = np.zeros( np.size(acc, axis=0)-1)
+    #for i in range(np.size(acc, axis=0)-1):
+        #for j in range(42):
+            ##s = acc[i+1][j] - acc[i][j]
+            ##jitter[j][i] = 100 * s
+            #if (acc[i][j]*acc[i+1][j] < 0):
+                #jitter[i] += 1
+            #else:
+                #jitter[i] += -1
+                ##if(jitter[i] > 0):
+                  # #jitter[i] += -1
+                ##else:
+                    ##jitter[i] = 0
+    ##for i in range(42):
+    #plt.figure(5)
+    #plt.plot( jitter,marker='o',linestyle='dashed', linewidth=1, markersize=10, label='Jitter')
+    #plt.ylabel('Jitter')
+
+    #plt.show()
+                #f.close()
 
 
 
