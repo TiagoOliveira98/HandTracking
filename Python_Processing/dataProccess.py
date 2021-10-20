@@ -15,7 +15,7 @@ nLines = 0
 data1 = np.zeros((42,3))
 data2 = np.zeros((42,3))
 
-speed = np.zeros((1,42))
+#speed = np.zeros((1,42))
 acc = np.zeros((1,42))
 aux = np.zeros((1,42))
 check = 0
@@ -29,6 +29,8 @@ for file in list:
     fileDirectory2 = path1 + "/{}".format(file.replace('.csv', '') + '_Speed.csv')
     fileDirectory = path
     fileDirectory += "/{}".format(file)
+
+    speed = np.zeros((1,42))
 
     f = open(fileDirectory, "r")
 
