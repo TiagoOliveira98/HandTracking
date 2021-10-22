@@ -16,6 +16,9 @@ public class Calibration : MonoBehaviour
 
     public GameObject cube;
 
+    public string user1;
+    public static string user;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,13 +32,20 @@ public class Calibration : MonoBehaviour
         //Start the reference for both hands at 0
         distRef = 0f;
         distRef2 = 0f;
+
+        user = null;
+        user1 = null;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(user == null)
+        {
+            user = user1;
+        }
         //Check if the Countdown is still ON
-        if (timerIsRunning)
+        else if (timerIsRunning)
         {
             //If the countdown is still running keep decreasing the number and diplay it
             if (timeRemaining > 0)

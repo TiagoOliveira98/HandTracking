@@ -86,6 +86,8 @@ public class ReceiveHandData : MonoBehaviour {
 
     float wristRightX, wristLeftX;
 
+    int check2, check3;
+
     // start
     public void Start()
     {
@@ -122,6 +124,22 @@ public class ReceiveHandData : MonoBehaviour {
 
         wristRightX = 0f;
         wristLeftX = 0f;
+
+        line = "WRIST,THUMB_CMC,THUMB_MCP,THUMB_IP,THUMB_TIP," +
+            "INDEX_FINGER_MCP,INDEX_FINGER_PIP,INDEX_FINGER_DIP,INDEX_FINGER_TIP," +
+            "MIDDLE_FINGER_MCP,MIDDLE_FINGER_PIP,MIDDLE_FINGER_DIP,MIDDLE_FINGER_TIP," +
+            "RING_FINGER_MCP,RING_FINGER_PIP,RING_FINGER_DIP,RING_FINGER_TIP," +
+            "PINKY_MCP,PINKY_PIP,PINKY_DIP,PINKY_TIP," +
+            "WRIST2,THUMB_CMC2,THUMB_MCP2,THUMB_IP2,THUMB_TIP2," +
+            "INDEX_FINGER_MCP2,INDEX_FINGER_PIP2,INDEX_FINGER_DIP2,INDEX_FINGER_TIP2," +
+            "MIDDLE_FINGER_MCP2,MIDDLE_FINGER_PIP2,MIDDLE_FINGER_DIP2,MIDDLE_FINGER_TIP2," +
+            "RING_FINGER_MCP2,RING_FINGER_PIP2,RING_FINGER_DIP2,RING_FINGER_TIP2," +
+            "PINKY_MCP2,PINKY_PIP2,PINKY_DIP2,PINKY_TIP2," +
+            "Timestamp,Event";
+        log.GetComponent<DataLogs>().Log(line,"DnF",false);
+        line = "";
+        check2 = 0;
+        check3 = 0;
     }
 
 
@@ -232,11 +250,26 @@ public class ReceiveHandData : MonoBehaviour {
         //Change the tag to Closed or Open
         if (rightHandClosed == 1)
         {
-            GrabPointRight.tag = "Closed";
+            if (check3 == 0)
+            {
+                GrabPointRight.tag = "Closed";
+                GameObject check = GameObject.Find("Logging");
+                if (check != null)
+                {
+                    check.GetComponent<DataLogs>().ev = "Right Hand Closed";
+                }
+                check3 = 1;
+            }
         }
         else if(rightHandClosed == 0)
         {
             GrabPointRight.tag = "Open";
+            check3 = 0;
+            /*GameObject check = GameObject.Find("Logging");
+            if (check != null)
+            {
+                check.GetComponent<DataLogs>().ev = "Right Hand Opened";
+            }*/
         }
 
         //LEFT HAND
@@ -319,79 +352,96 @@ public class ReceiveHandData : MonoBehaviour {
         if (leftHandClosed == 1)
         {
             GrabPointLeft.tag = "Closed";
+            if (check2 == 0)
+            {
+                GameObject check = GameObject.Find("Logging");
+                if (check != null)
+                {
+                    check.GetComponent<DataLogs>().ev = "Left Hand Closed";
+                }
+                check2 = 1;
+            }
+            //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Closed";
         }
         else if (leftHandClosed == 0)
         {
             GrabPointLeft.tag = "Open";
+            check2 = 0;
+            //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Opened";
         }
 
         //Logging Data
-        if (GameObject.Find("BucketBlue") != null && wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x)
-        {
+        //if (GameObject.Find("BucketBlue") != null /*&& wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x*/)
+        /*{
             //Right Hand
-            line += WRIST.transform.position.x.ToString().Replace(",", ".") + "," + WRIST.transform.position.y.ToString().Replace(",", ".") + "," + WRIST.transform.position.z.ToString().Replace(",", ".");
+            line += WRIST.transform.position.x.ToString().Replace(",", ".") + " " + WRIST.transform.position.y.ToString().Replace(",", ".") + " " + WRIST.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + THUMB_CMC.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_CMC.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_CMC.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_MCP.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_MCP.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_IP.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_IP.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_IP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_TIP.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_TIP.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_TIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_CMC.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_MCP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_IP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_TIP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + INDEX_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + MIDDLE_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + RING_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + PINKY_MCP.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_MCP.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_PIP.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_PIP.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_DIP.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_DIP.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_TIP.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_TIP.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_TIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_MCP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_PIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_DIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_TIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.z.ToString().Replace(",", ".");
 
             //Left Hand
-            line += ";" + WRIST2.transform.position.x.ToString().Replace(",", ".") + "," + WRIST2.transform.position.y.ToString().Replace(",", ".") + "," + WRIST2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + WRIST2.transform.position.x.ToString().Replace(",", ".") + " " + WRIST2.transform.position.y.ToString().Replace(",", ".") + " " + WRIST2.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + THUMB_CMC2.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_CMC2.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_CMC2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_MCP2.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_MCP2.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_IP2.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_IP2.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_IP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + THUMB_TIP2.transform.position.x.ToString().Replace(",", ".") + "," + THUMB_TIP2.transform.position.y.ToString().Replace(",", ".") + "," + THUMB_TIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_CMC2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_IP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + THUMB_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + INDEX_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + INDEX_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + "," + INDEX_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + "," + INDEX_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + INDEX_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + MIDDLE_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + MIDDLE_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + "," + MIDDLE_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + MIDDLE_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + RING_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + RING_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + "," + RING_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + "," + RING_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + RING_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += ";" + PINKY_MCP2.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_MCP2.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_PIP2.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_PIP2.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_DIP2.transform.position.x.ToString().Replace(",", ".") + "," + PINKY_DIP2.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += ";" + PINKY_TIP2.transform.position.x.ToString().Replace(",",".") + "," + PINKY_TIP2.transform.position.y.ToString().Replace(",", ".") + "," + PINKY_TIP2.transform.position.z.ToString().Replace(",", ".") /*+ "\n"*/;
+            line += "," + PINKY_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.z.ToString().Replace(",", ".");
+            line += "," + PINKY_TIP2.transform.position.x.ToString().Replace(",",".") + " " + PINKY_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP2.transform.position.z.ToString().Replace(",", ".")*/ /*+ "\n"*/;
 
-            log.GetComponent<DataLogs>().Log(line);
+            /*log.GetComponent<DataLogs>().Log(line);
             line = "";
-        }
+        }*/
 
-        wristRightX = WRIST.transform.position.x;
-        wristLeftX = WRIST2.transform.position.x;
+        //wristRightX = WRIST.transform.position.x;
+        //wristLeftX = WRIST2.transform.position.x;
+
     }
 
+    void OnApplicationQuit()
+    {
+        log.GetComponent<DataLogs>().CloseFile();
+    }
 
     // init
     private void init()
