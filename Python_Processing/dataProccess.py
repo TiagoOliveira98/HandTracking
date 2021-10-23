@@ -12,6 +12,8 @@ list = os.listdir(path)
 
 nLines = 0
 
+first = 1
+
 data1 = np.zeros((42,3))
 data2 = np.zeros((42,3))
 
@@ -76,10 +78,19 @@ for file in list:
             #speed[0][42] = time2
             #check = 1
         #else:
-        for i in range(42):
-            aux[0][i] = (math.sqrt( (data2[i][0] - data1[i][0])**2 + (data2[i][1] - data1[i][1])**2 + (data2[i][2] - data1[i][2])**2  )) / (time2 - time1)
-        aux[0][42] = time2
-        speed = np.vstack([speed,aux])
+        ####for i in range(42):
+            ####aux[0][i] = (math.sqrt( (data2[i][0] - data1[i][0])**2 + (data2[i][1] - data1[i][1])**2 + (data2[i][2] - data1[i][2])**2  )) / (time2 - time1)
+        ####aux[0][42] = time2
+        if first == 1:
+            for i in range(42):
+                speed[0][i] = (math.sqrt( (data2[i][0] - data1[i][0])**2 + (data2[i][1] - data1[i][1])**2 + (data2[i][2] - data1[i][2])**2  )) / (time2 - time1)
+            speed[0][42] = time2
+            first = 0
+        else:
+            for i in range(42):
+                aux[0][i] = (math.sqrt( (data2[i][0] - data1[i][0])**2 + (data2[i][1] - data1[i][1])**2 + (data2[i][2] - data1[i][2])**2  )) / (time2 - time1)
+            aux[0][42] = time2
+            speed = np.vstack([speed,aux])
 
         line1 = line2
         line2 = f.readline()
@@ -97,8 +108,9 @@ for file in list:
 
     f2 = open(fileDirectory2, "w")
     #Header
-    line = "WRIST,THUMB_CMC,THUMB_MCP,THUMB_IP,THUMB_TIP,INDEX_FINGER_MCP,INDEX_FINGER_PIP,INDEX_FINGER_DIP,INDEX_FINGER_TIP,MIDDLE_FINGER_MCP,MIDDLE_FINGER_PIP,MIDDLE_FINGER_DIP,MIDDLE_FINGER_TIP, RING_FINGER_MCP,RING_FINGER_PIP,RING_FINGER_DIP,RING_FINGER_TIP,PINKY_MCP,PINKY_PIP,PINKY_DIP,PINKY_TIP,WRIST2,THUMB_CMC2,THUMB_MCP2,THUMB_IP2,THUMB_TIP2,INDEX_FINGER_MCP2,INDEX_FINGER_PIP2,INDEX_FINGER_DIP2,INDEX_FINGER_TIP2,MIDDLE_FINGER_MCP2,MIDDLE_FINGER_PIP2,MIDDLE_FINGER_DIP2,MIDDLE_FINGER_TIP2,RING_FINGER_MCP2,RING_FINGER_PIP2,RING_FINGER_DIP2,RING_FINGER_TIP2,PINKY_MCP2,PINKY_PIP2,PINKY_DIP2,PINKY_TIP2,Timestamp";
+    line = 'WRIST,THUMB_CMC,THUMB_MCP,THUMB_IP,THUMB_TIP,INDEX_FINGER_MCP,INDEX_FINGER_PIP,INDEX_FINGER_DIP,INDEX_FINGER_TIP,MIDDLE_FINGER_MCP,MIDDLE_FINGER_PIP,MIDDLE_FINGER_DIP,MIDDLE_FINGER_TIP, RING_FINGER_MCP,RING_FINGER_PIP,RING_FINGER_DIP,RING_FINGER_TIP,PINKY_MCP,PINKY_PIP,PINKY_DIP,PINKY_TIP,WRIST2,THUMB_CMC2,THUMB_MCP2,THUMB_IP2,THUMB_TIP2,INDEX_FINGER_MCP2,INDEX_FINGER_PIP2,INDEX_FINGER_DIP2,INDEX_FINGER_TIP2,MIDDLE_FINGER_MCP2,MIDDLE_FINGER_PIP2,MIDDLE_FINGER_DIP2,MIDDLE_FINGER_TIP2,RING_FINGER_MCP2,RING_FINGER_PIP2,RING_FINGER_DIP2,RING_FINGER_TIP2,PINKY_MCP2,PINKY_PIP2,PINKY_DIP2,PINKY_TIP2,Timestamp\n'
     f2.write(line)
+    line = ''
     for i in range(np.size(speed, 0)):
         #Write in the file the info about the speed
         line = str(speed[i][0])

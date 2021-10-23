@@ -1,10 +1,12 @@
-T = readtable('../DataLogging/VelocityJoint/Logs(1634851576)_Speed.csv','NumHeaderLines',1);
+%T = readtable('../DataLogging/VelocityJoint/Logs(1634851576)_Speed.csv','NumHeaderLines',1);
 
 MyFolderInfo = dir('../DataLogging/VelocityJoint/*.csv')
 
 for file = 1:size(MyFolderInfo,1)
 
     fileName = MyFolderInfo(file).name
+
+    T = readtable(sprintf('../DataLogging/VelocityJoint/%s', fileName),'NumHeaderLines',1)
     
     Data = table2array(T);
     x = Data(:,1);
@@ -22,7 +24,7 @@ for file = 1:size(MyFolderInfo,1)
     for joint = 1:21
         x = Data(:,joint);
         it = 1
-        for i = 1:size(a,1)
+        for i = 1:size(x,1)
             if x(i,1) ~= 0 
                 filterX(it,1) = x(i,1);
                 filterT(it,1) = Time(i,1);
@@ -33,7 +35,7 @@ for file = 1:size(MyFolderInfo,1)
         nexttile
         plot(filterT,filterX,'-o')
         ylim([0 100])
-        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Right Hand', t))
+        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Right Hand', joint-1))
         ylabel('Mean Velocity') 
         xlabel('Final Timestamp in Interval (t) [t-0.02 t]') 
         legend({'Mean Velocity'},'Location','northwest')
@@ -46,10 +48,10 @@ for file = 1:size(MyFolderInfo,1)
     fh.WindowState = 'maximized';
     tiledlayout(4,6);
     
-    for t = 22:42
-        x = Data(:,t);
+    for joint = 22:42
+        x = Data(:,joint);
         it = 1
-        for i = 1:size(a,1)
+        for i = 1:size(x,1)
             if x(i,1) ~= 0 
                 filterX(it,1) = x(i,1);
                 filterT(it,1) = Time(i,1);
@@ -60,7 +62,7 @@ for file = 1:size(MyFolderInfo,1)
         nexttile
         plot(filterT,filterX,'-o')
         ylim([0 100])
-        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Left Hand', t-21))
+        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Left Hand', joint-22))
         ylabel('Mean Velocity') 
         xlabel('Final Timestamp in Interval (t) [t-0.02 t]') 
         legend({'Mean Velocity'},'Location','northwest')
