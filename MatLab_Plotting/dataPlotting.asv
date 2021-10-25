@@ -35,7 +35,6 @@ for file = 1:size(MyFolderInfo,1)
     for joint = 1:21
         x = Data(:,joint);
         it = 1
-        t = 0
         filterX = zeros(sizeee,1)
         filterT = zeros(sizeee,1)
         for i = 1:size(x,1)
@@ -44,7 +43,6 @@ for file = 1:size(MyFolderInfo,1)
             %    filterT(it,1) = Time(i,1);
             %    it = it +1;
             %end
-            t = 0
             for a = 1:42
                 if Data(i,a) ~= 0 
                     t = t + 1
@@ -52,16 +50,14 @@ for file = 1:size(MyFolderInfo,1)
                 %sizeee = sizeee + 1
             end
             if t > 0 
-                filterX(it,1) = x(i,1);
-                filterT(it,1) = Time(i,1);
-                it = it +1;
+                sizeee = sizeee + 1
             end
         end
-        %if joint == 1
-        %    all = filterX;
-        %else
-        %    all = [all filterX]
-        %end
+        if joint == 1
+            all = filterX;
+        else
+            all = [all filterX]
+        end
       
         nexttile
         plot(filterT,filterX,'-o')
