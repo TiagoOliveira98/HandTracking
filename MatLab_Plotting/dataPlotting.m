@@ -1,5 +1,3 @@
-%T = readtable('../DataLogging/VelocityJoint/Logs(1634851576)_Speed.csv','NumHeaderLines',1);
-
 MyFolderInfo = dir('../DataLogging/VelocityJoint/*.csv')
 
 for file = 1:size(MyFolderInfo,1)
@@ -35,9 +33,9 @@ for file = 1:size(MyFolderInfo,1)
         nexttile
         plot(filterT,filterX,'-o')
         ylim([0 100])
-        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Right Hand', joint-1))
+        title(sprintf('Plot of the variance of mean Velocity in the interval from last Timestamp represented to this one of the Joint%i of the Right Hand', joint-1))
         ylabel('Mean Velocity') 
-        xlabel('Final Timestamp in Interval (t) [t-0.02 t]') 
+        xlabel('Final Timestamp in Interval from last Timestamp represented to this one') 
         legend({'Mean Velocity'},'Location','northwest')
         ax = gca;
         ax.FontSize = 5;
@@ -62,9 +60,9 @@ for file = 1:size(MyFolderInfo,1)
         nexttile
         plot(filterT,filterX,'-o')
         ylim([0 100])
-        title(sprintf('Plot of the variance of mean Velocity in the interval [t-0.02 t] of the Joint%i of the Left Hand', joint-22))
+        title(sprintf('Plot of the variance of mean Velocity in the interval from last Timestamp represented to this one of the Joint%i of the Left Hand', joint-22))
         ylabel('Mean Velocity') 
-        xlabel('Final Timestamp in Interval (t) [t-0.02 t]') 
+        xlabel('Final Timestamp in Interval from last Timestamp represented to this one') 
         legend({'Mean Velocity'},'Location','northwest')
         ax = gca;
         ax.FontSize = 5;
