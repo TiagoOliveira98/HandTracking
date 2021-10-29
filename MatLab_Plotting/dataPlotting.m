@@ -116,7 +116,6 @@ for file = 1:size(MyFolderInfo,1)
     end
 
     %Acceleration
-       
     %acc = filterX.^2
     Freq = 1/0.02;
     acc = zeros(size(filterV,1)-1,42);
@@ -154,6 +153,48 @@ for file = 1:size(MyFolderInfo,1)
             ylabel('Acceleration') ;
             xlabel('Final Timestamp in Interval from last Timestamp represented to this one') ;
             legend({'Accerelation'},'Location','northwest');
+            ax = gca;
+            ax.FontSize = 5;
+    end
+
+    %Jitter
+    %Average
+    Freq = 1/(0.02*(size(Data,1)/size(acc,1)));
+    jitter = zeros(size(acc,1)-1,42);
+    for i = 1:size(acc,1)-1
+        for a = 1:42
+            jitter(i,a) = (acc(i+1, a) - acc(i,1)) * Freq;
+        end
+    end
+
+    fh = figure('Name', sprintf('Right Hand Jitter Data from File %s', fileName),'NumberTitle','off')
+    fh.WindowState = 'maximized';
+    tiledlayout(4,6);
+    
+    for joint = 1:21
+            nexttile;
+            plot(acc(:,joint),'-o');
+            ylim([-2000 2000]);
+            title(sprintf('Plot of the variance of Jitter in the interval from last Timestamp represented to this one of the Joint%i of the Right Hand', joint-1));
+            ylabel('Jitter') ;
+            xlabel('Final Timestamp in Interval from last Timestamp represented to this one') ;
+            legend({'Jitter'},'Location','northwest');
+            ax = gca;
+            ax.FontSize = 5;
+    end
+    
+    fh = figure('Name', sprintf('Left Hand Jitter Data from File %s', fileName),'NumberTitle','off')
+    fh.WindowState = 'maximized';
+    tiledlayout(4,6);
+    
+    for joint = 22:42
+            nexttile;
+            plot(acc(:,joint),'-o');
+            ylim([-2000 2000]);
+            title(sprintf('Plot of the variance of Jitter in the interval from last Timestamp represented to this one of the Joint%i of the Left Hand', joint-22));
+            ylabel('Jitter') ;
+            xlabel('Final Timestamp in Interval from last Timestamp represented to this one') ;
+            legend({'Jitter'},'Location','northwest');
             ax = gca;
             ax.FontSize = 5;
     end
