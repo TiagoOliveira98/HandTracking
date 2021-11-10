@@ -203,20 +203,16 @@ for file = 1:size(MyFolderInfo,1)
     zeroCrossing = zeros(1,42);
     for joint = 1:42
         for i = 1:size(acc,1)-1
-            if acc(i, joint)*acc(i+1, joint) < 0
+            if acc(i, joint)*acc(i+1, joint) <= 0
                 zeroCrossing(1,joint) = zeroCrossing(1,joint) + 1;
             end
         end
     end
-    
-    zeroCrossing = zeroCrossing/size(acc,1);
-
     figure('Name', sprintf('Zero Crossings from File %s', fileName),'NumberTitle','off');
     fh.WindowState = 'maximized';
 
     bar(zeroCrossing);
-    %ylim([0 size(acc,1)]);
-    ylim([0 1]);
     title(sprintf('Bar Plot of the Zero Crossings of Acceleration'));
-    ylabel('Zero Crossings') ;
+    ylabel('Acceleration') ;
 end
+
