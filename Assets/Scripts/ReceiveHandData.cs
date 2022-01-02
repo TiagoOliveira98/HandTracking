@@ -124,8 +124,9 @@ public class ReceiveHandData : MonoBehaviour {
 
         wristRightX = 0f;
         wristLeftX = 0f;
-
-        line = "WRIST,THUMB_CMC,THUMB_MCP,THUMB_IP,THUMB_TIP," +
+        if (GameObject.Find("Bucket") == false)
+        {
+            line = "WRIST,THUMB_CMC,THUMB_MCP,THUMB_IP,THUMB_TIP," +
             "INDEX_FINGER_MCP,INDEX_FINGER_PIP,INDEX_FINGER_DIP,INDEX_FINGER_TIP," +
             "MIDDLE_FINGER_MCP,MIDDLE_FINGER_PIP,MIDDLE_FINGER_DIP,MIDDLE_FINGER_TIP," +
             "RING_FINGER_MCP,RING_FINGER_PIP,RING_FINGER_DIP,RING_FINGER_TIP," +
@@ -136,8 +137,9 @@ public class ReceiveHandData : MonoBehaviour {
             "RING_FINGER_MCP2,RING_FINGER_PIP2,RING_FINGER_DIP2,RING_FINGER_TIP2," +
             "PINKY_MCP2,PINKY_PIP2,PINKY_DIP2,PINKY_TIP2," +
             "Timestamp,Event";
-        log.GetComponent<DataLogs>().Log(line,"DnF",false);
-        line = "";
+            log.GetComponent<DataLogs>().Log(line, "DnF", false);
+            line = "";
+        }
         check2 = 0;
         check3 = 0;
     }

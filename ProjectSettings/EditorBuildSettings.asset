@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 787944c98bd60824e9552c853aae83b5
+  - enabled: 1
+    path: Assets/Scenes/Level2_Left.unity
+    guid: 441824a27a0e841468f255151bf78cfb
+  - enabled: 1
+    path: Assets/Scenes/Calculator.unity
+    guid: e8ec01b620debe7478395f7aceceabfa
+  - enabled: 1
+    path: Assets/Scenes/MemoryGame.unity
+    guid: aad056229958e854aaf6e5ceaf6c4af6
   m_configObjects: {}

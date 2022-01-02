@@ -9,6 +9,8 @@ TagManager:
   - Closed
   - blue
   - green
+  - right
+  - left
   layers:
   - Default
   - TransparentFX

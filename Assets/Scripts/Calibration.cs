@@ -19,6 +19,9 @@ public class Calibration : MonoBehaviour
     public string user1;
     public static string user;
 
+    public string hand1;
+    public static string hand;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,14 +38,18 @@ public class Calibration : MonoBehaviour
 
         user = null;
         user1 = null;
+
+        hand = null;
+        hand1 = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(user == null)
+        if(user == null || hand == null)
         {
             user = user1;
+            hand = hand1;
         }
         //Check if the Countdown is still ON
         else if (timerIsRunning)

@@ -21,9 +21,12 @@ public class ColliderCheckBucketColor : MonoBehaviour
 
     public float x1, y1, z1, x2, y2, z2;
 
+    Scene scene;
+
     // Start is called before the first frame update
     void Start()
     {
+        scene = SceneManager.GetActiveScene();
         //Get the Main Camera object from the scene to access to the points variable
         cameras = GameObject.Find("Main Camera");
         points = cameras.GetComponent<Points>();
@@ -61,7 +64,15 @@ public class ColliderCheckBucketColor : MonoBehaviour
         else if(find == droppedObject && other.gameObject.tag != color)
         {
             //Put the cube back into the initial position
-            other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
+            if (scene.name == "Level2_Left")
+            {
+                other.gameObject.transform.position = new Vector3(-10.16f, -5.72f, 1.8f);
+            }
+            else
+            {
+                other.gameObject.transform.position = new Vector3(0.6000002f, -7.99f, 1.8f);
+            }
+            
             Debug.Log("Wrong Bucket!");
 
         }
