@@ -23,6 +23,9 @@ using System.Collections.Generic;
 
 public class ReceiveHandData : MonoBehaviour {
 
+    //
+    bool go;
+
     // receiving Thread
     Thread receiveThread;
 
@@ -91,6 +94,8 @@ public class ReceiveHandData : MonoBehaviour {
     // start
     public void Start()
     {
+       
+
         init();
         
         gain = 15; //Gain for the hands
@@ -142,303 +147,331 @@ public class ReceiveHandData : MonoBehaviour {
         }
         check2 = 0;
         check3 = 0;
+
+        //
+        go = false;
+        Invoke("Wait", 2);
+
+
     }
 
 
     public void Update()
     {
-        //Get distance between WRIST and MIDDLE_FINGER_MCP to use to better improve the depth
-        x1 = p9pos.x;
-        x2 = p0pos.x;
-        y1 = p9pos.y;
-        y2 = p0pos.y;
-        z1 = p9pos.z;
-        z2 = p0pos.z;
-        dist = (float)Math.Sqrt(Mathf.Pow(x1 - x2, 2f) + Mathf.Pow(y1 - y2, 2f) + Mathf.Pow(z1 - z2, 2f));
+        /*if (go)
+        {*/
+            //Get distance between WRIST and MIDDLE_FINGER_MCP to use to better improve the depth
+            x1 = p9pos.x;
+            x2 = p0pos.x;
+            y1 = p9pos.y;
+            y2 = p0pos.y;
+            z1 = p9pos.z;
+            z2 = p0pos.z;
+            dist = (float)Math.Sqrt(Mathf.Pow(x1 - x2, 2f) + Mathf.Pow(y1 - y2, 2f) + Mathf.Pow(z1 - z2, 2f));
 
-        x1 = p9pos2.x;
-        x2 = p0pos2.x;
-        y1 = p9pos2.y;
-        y2 = p0pos2.y;
-        z1 = p9pos2.z;
-        z2 = p0pos2.z;
-        dist2 = (float)Math.Sqrt(Mathf.Pow(x1 - x2, 2f) + Mathf.Pow(y1 - y2, 2f) + Mathf.Pow(z1 - z2, 2f));
+            x1 = p9pos2.x;
+            x2 = p0pos2.x;
+            y1 = p9pos2.y;
+            y2 = p0pos2.y;
+            z1 = p9pos2.z;
+            z2 = p0pos2.z;
+            dist2 = (float)Math.Sqrt(Mathf.Pow(x1 - x2, 2f) + Mathf.Pow(y1 - y2, 2f) + Mathf.Pow(z1 - z2, 2f));
 
-        ref1 = Calibration.distRef;
-        ref2 = Calibration.distRef2;
-        if (ref1 != 0f)
-        {
-            addRight = ref1 - dist;
-            addLeft = ref2 - dist2;
-        }
-
-        //Update the coordinates of each joint from both hands
-        //RIGHT HAND
-        //WRIST
-        WRIST.transform.position = (new Vector3(p0pos.x + gain3, p0pos.y, p0pos.z + gain2 * addRight))*Mirror;
-        //WRIST.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        //THUMB
-        THUMB_CMC.transform.position = (new Vector3(p1pos.x + gain3, p1pos.y, p1pos.z + gain2 * addRight)) * Mirror;
-        //THUMB_CMC.transform.eulerAngles = new Vector3(0, 0, 0);
-      
-        THUMB_MCP.transform.position = (new Vector3(p2pos.x + gain3, p2pos.y, p2pos.z + gain2 * addRight)) * Mirror;
-        //THUMB_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-       
-        THUMB_IP.transform.position = (new Vector3(p3pos.x + gain3, p3pos.y, p3pos.z + gain2 * addRight)) * Mirror;
-        //THUMB_IP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        THUMB_TIP.transform.position = (new Vector3(p4pos.x + gain3, p4pos.y, p4pos.z + gain2 * addRight)) * Mirror;
-        //THUMB_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //INDEX FINGER
-        INDEX_FINGER_MCP.transform.position = (new Vector3(p5pos.x + gain3, p5pos.y, p5pos.z + gain2 * addRight)) * Mirror;
-        //INDEX_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        INDEX_FINGER_PIP.transform.position = (new Vector3(p6pos.x + gain3, p6pos.y, p6pos.z + gain2 * addRight)) * Mirror;
-        //INDEX_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        INDEX_FINGER_DIP.transform.position = (new Vector3(p7pos.x + gain3, p7pos.y, p7pos.z + gain2 * addRight)) * Mirror;
-        //INDEX_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-     
-        INDEX_FINGER_TIP.transform.position = (new Vector3(p8pos.x + gain3, p8pos.y, p8pos.z + gain2 * addRight)) * Mirror;
-        //INDEX_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //MIDDLE FINGER
-        MIDDLE_FINGER_MCP.transform.position = (new Vector3(p9pos.x + gain3, p9pos.y, p9pos.z + gain2 * addRight)) * Mirror;
-        //MIDDLE_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-      
-        MIDDLE_FINGER_PIP.transform.position = (new Vector3(p10pos.x + gain3, p10pos.y, p10pos.z + gain2 * addRight)) * Mirror;
-        //MIDDLE_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-       
-        MIDDLE_FINGER_DIP.transform.position = (new Vector3(p11pos.x + gain3, p11pos.y, p11pos.z + gain2 * addRight)) * Mirror;
-        //MIDDLE_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        MIDDLE_FINGER_TIP.transform.position = (new Vector3(p12pos.x + gain3, p12pos.y, p12pos.z + gain2 * addRight)) * Mirror;
-        //MIDDLE_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //RING FINGER
-        RING_FINGER_MCP.transform.position = (new Vector3(p13pos.x + gain3, p13pos.y, p13pos.z + gain2 * addRight)) * Mirror;
-        //RING_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        RING_FINGER_PIP.transform.position = (new Vector3(p14pos.x + gain3, p14pos.y, p14pos.z + gain2 * addRight)) * Mirror;
-        //RING_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        RING_FINGER_DIP.transform.position = (new Vector3(p15pos.x + gain3, p15pos.y, p15pos.z + gain2 * addRight)) * Mirror;
-        //RING_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        RING_FINGER_TIP.transform.position = (new Vector3(p16pos.x + gain3, p16pos.y, p16pos.z + gain2 * addRight)) * Mirror;
-        //RING_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //PINKY
-        PINKY_MCP.transform.position = (new Vector3(p17pos.x + gain3, p17pos.y, p17pos.z + gain2 * addRight)) * Mirror;
-        //PINKY_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_PIP.transform.position = (new Vector3(p18pos.x + gain3, p18pos.y, p18pos.z + gain2 * addRight)) * Mirror;
-        //PINKY_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_DIP.transform.position = (new Vector3(p19pos.x + gain3, p19pos.y, p19pos.z + gain2 * addRight)) * Mirror;
-        //PINKY_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_TIP.transform.position = (new Vector3(p20pos.x + gain3, p20pos.y, p20pos.z + gain2 * addRight)) * Mirror;
-        //PINKY_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //COORDINATES FOR THE GRABBING POINT
-        float centerXright = (PINKY_TIP.transform.position[0]*0.15f + RING_FINGER_TIP.transform.position[0]*0.15f + MIDDLE_FINGER_TIP.transform.position[0]*0.25f + INDEX_FINGER_TIP.transform.position[0]*0.15f + THUMB_TIP.transform.position[0]*0.3f) /*/ 5.0f*/;
-        float centerYright = (PINKY_TIP.transform.position[1]*0.15f + RING_FINGER_TIP.transform.position[1]*0.15f + MIDDLE_FINGER_TIP.transform.position[1]*0.25f + INDEX_FINGER_TIP.transform.position[1]*0.15f + THUMB_TIP.transform.position[1]*0.3f) /*/ 5.0f*/;
-        float centerZright = (PINKY_TIP.transform.position[2]*0.15f + RING_FINGER_TIP.transform.position[2]*0.15f + MIDDLE_FINGER_TIP.transform.position[2]*0.25f + INDEX_FINGER_TIP.transform.position[2]*0.15f + THUMB_TIP.transform.position[2]*0.3f) /*/ 5.0f*/;
-        GrabPointRight.transform.position = new Vector3(centerXright, centerYright, centerZright);
-
-        //Change the tag to Closed or Open
-        if (rightHandClosed == 1)
-        {
-            if (check3 == 0)
+            ref1 = Calibration.distRef;
+            ref2 = Calibration.distRef2;
+            if (ref1 != 0f)
             {
-                GrabPointRight.tag = "Closed";
-                GameObject check = GameObject.Find("Logging");
+                addRight = ref1 - dist;
+                addLeft = ref2 - dist2;
+            }
+
+            //
+            GameObject check = GameObject.Find("Logging");
+            check.GetComponent<DataLogs>().ev = "";
+
+
+            //Update the coordinates of each joint from both hands
+            //RIGHT HAND
+            //WRIST
+            WRIST.transform.position = (new Vector3(p0pos.x + gain3, p0pos.y, p0pos.z + gain2 * addRight)) * Mirror;
+            //WRIST.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //THUMB
+            THUMB_CMC.transform.position = (new Vector3(p1pos.x + gain3, p1pos.y, p1pos.z + gain2 * addRight)) * Mirror;
+            //THUMB_CMC.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_MCP.transform.position = (new Vector3(p2pos.x + gain3, p2pos.y, p2pos.z + gain2 * addRight)) * Mirror;
+            //THUMB_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_IP.transform.position = (new Vector3(p3pos.x + gain3, p3pos.y, p3pos.z + gain2 * addRight)) * Mirror;
+            //THUMB_IP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_TIP.transform.position = (new Vector3(p4pos.x + gain3, p4pos.y, p4pos.z + gain2 * addRight)) * Mirror;
+            //THUMB_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //INDEX FINGER
+            INDEX_FINGER_MCP.transform.position = (new Vector3(p5pos.x + gain3, p5pos.y, p5pos.z + gain2 * addRight)) * Mirror;
+            //INDEX_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_PIP.transform.position = (new Vector3(p6pos.x + gain3, p6pos.y, p6pos.z + gain2 * addRight)) * Mirror;
+            //INDEX_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_DIP.transform.position = (new Vector3(p7pos.x + gain3, p7pos.y, p7pos.z + gain2 * addRight)) * Mirror;
+            //INDEX_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_TIP.transform.position = (new Vector3(p8pos.x + gain3, p8pos.y, p8pos.z + gain2 * addRight)) * Mirror;
+            //INDEX_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //MIDDLE FINGER
+            MIDDLE_FINGER_MCP.transform.position = (new Vector3(p9pos.x + gain3, p9pos.y, p9pos.z + gain2 * addRight)) * Mirror;
+            //MIDDLE_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_PIP.transform.position = (new Vector3(p10pos.x + gain3, p10pos.y, p10pos.z + gain2 * addRight)) * Mirror;
+            //MIDDLE_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_DIP.transform.position = (new Vector3(p11pos.x + gain3, p11pos.y, p11pos.z + gain2 * addRight)) * Mirror;
+            //MIDDLE_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_TIP.transform.position = (new Vector3(p12pos.x + gain3, p12pos.y, p12pos.z + gain2 * addRight)) * Mirror;
+            //MIDDLE_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //RING FINGER
+            RING_FINGER_MCP.transform.position = (new Vector3(p13pos.x + gain3, p13pos.y, p13pos.z + gain2 * addRight)) * Mirror;
+            //RING_FINGER_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_PIP.transform.position = (new Vector3(p14pos.x + gain3, p14pos.y, p14pos.z + gain2 * addRight)) * Mirror;
+            //RING_FINGER_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_DIP.transform.position = (new Vector3(p15pos.x + gain3, p15pos.y, p15pos.z + gain2 * addRight)) * Mirror;
+            //RING_FINGER_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_TIP.transform.position = (new Vector3(p16pos.x + gain3, p16pos.y, p16pos.z + gain2 * addRight)) * Mirror;
+            //RING_FINGER_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //PINKY
+            PINKY_MCP.transform.position = (new Vector3(p17pos.x + gain3, p17pos.y, p17pos.z + gain2 * addRight)) * Mirror;
+            //PINKY_MCP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_PIP.transform.position = (new Vector3(p18pos.x + gain3, p18pos.y, p18pos.z + gain2 * addRight)) * Mirror;
+            //PINKY_PIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_DIP.transform.position = (new Vector3(p19pos.x + gain3, p19pos.y, p19pos.z + gain2 * addRight)) * Mirror;
+            //PINKY_DIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_TIP.transform.position = (new Vector3(p20pos.x + gain3, p20pos.y, p20pos.z + gain2 * addRight)) * Mirror;
+            //PINKY_TIP.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //COORDINATES FOR THE GRABBING POINT
+            float centerXright = (PINKY_TIP.transform.position[0] * 0.15f + RING_FINGER_TIP.transform.position[0] * 0.15f + MIDDLE_FINGER_TIP.transform.position[0] * 0.25f + INDEX_FINGER_TIP.transform.position[0] * 0.15f + THUMB_TIP.transform.position[0] * 0.3f) /*/ 5.0f*/;
+            float centerYright = (PINKY_TIP.transform.position[1] * 0.15f + RING_FINGER_TIP.transform.position[1] * 0.15f + MIDDLE_FINGER_TIP.transform.position[1] * 0.25f + INDEX_FINGER_TIP.transform.position[1] * 0.15f + THUMB_TIP.transform.position[1] * 0.3f) /*/ 5.0f*/;
+            float centerZright = (PINKY_TIP.transform.position[2] * 0.15f + RING_FINGER_TIP.transform.position[2] * 0.15f + MIDDLE_FINGER_TIP.transform.position[2] * 0.25f + INDEX_FINGER_TIP.transform.position[2] * 0.15f + THUMB_TIP.transform.position[2] * 0.3f) /*/ 5.0f*/;
+            GrabPointRight.transform.position = new Vector3(centerXright, centerYright, centerZright);
+
+            //Change the tag to Closed or Open
+            if (rightHandClosed == 1)
+            {
+                //if (check3 == 0)
+                //{
+                    GrabPointRight.tag = "Closed";
+                    //GameObject check = GameObject.Find("Logging");
+                    if (check != null)
+                    {
+                        check.GetComponent<DataLogs>().ev = "Right Hand Closed ";
+                    }
+                    check3 = 1;
+                //}
+            }
+            else if (rightHandClosed == 0)
+            {
+                GrabPointRight.tag = "Open";
+                check3 = 0;
+                /*GameObject check = GameObject.Find("Logging");
                 if (check != null)
                 {
-                    check.GetComponent<DataLogs>().ev = "Right Hand Closed";
-                }
-                check3 = 1;
+                    check.GetComponent<DataLogs>().ev = "Right Hand Opened";
+                }*/
             }
-        }
-        else if(rightHandClosed == 0)
-        {
-            GrabPointRight.tag = "Open";
-            check3 = 0;
-            /*GameObject check = GameObject.Find("Logging");
-            if (check != null)
+
+            //LEFT HAND
+            //WRIST
+            WRIST2.transform.position = (new Vector3(p0pos2.x + gain3, p0pos2.y, p0pos2.z + gain2 * addLeft)) * Mirror;
+            //WRIST2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //THUMB
+            THUMB_CMC2.transform.position = (new Vector3(p1pos2.x + gain3, p1pos2.y, p1pos2.z + gain2 * addLeft)) * Mirror;
+            //THUMB_CMC2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_MCP2.transform.position = (new Vector3(p2pos2.x + gain3, p2pos2.y, p2pos2.z + gain2 * addLeft)) * Mirror;
+            //THUMB_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_IP2.transform.position = (new Vector3(p3pos2.x + gain3, p3pos2.y, p3pos2.z + gain2 * addLeft)) * Mirror;
+            //THUMB_IP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            THUMB_TIP2.transform.position = (new Vector3(p4pos2.x + gain3, p4pos2.y, p4pos2.z + gain2 * addLeft)) * Mirror;
+            //THUMB_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //INDEX FINGER
+            INDEX_FINGER_MCP2.transform.position = (new Vector3(p5pos2.x + gain3, p5pos2.y, p5pos2.z + gain2 * addLeft)) * Mirror;
+            //INDEX_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_PIP2.transform.position = (new Vector3(p6pos2.x + gain3, p6pos2.y, p6pos2.z + gain2 * addLeft)) * Mirror;
+            //INDEX_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_DIP2.transform.position = (new Vector3(p7pos2.x + gain3, p7pos2.y, p7pos2.z + gain2 * addLeft)) * Mirror;
+            //INDEX_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            INDEX_FINGER_TIP2.transform.position = (new Vector3(p8pos2.x + gain3, p8pos2.y, p8pos2.z + gain2 * addLeft)) * Mirror;
+            //INDEX_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //MIDDLE FINGER
+            MIDDLE_FINGER_MCP2.transform.position = (new Vector3(p9pos2.x + gain3, p9pos2.y, p9pos2.z + gain2 * addLeft)) * Mirror;
+            //MIDDLE_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_PIP2.transform.position = (new Vector3(p10pos2.x + gain3, p10pos2.y, p10pos2.z + gain2 * addLeft)) * Mirror;
+            //MIDDLE_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_DIP2.transform.position = (new Vector3(p11pos2.x + gain3, p11pos2.y, p11pos2.z + gain2 * addLeft)) * Mirror;
+            //MIDDLE_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            MIDDLE_FINGER_TIP2.transform.position = (new Vector3(p12pos2.x + gain3, p12pos2.y, p12pos2.z + gain2 * addLeft)) * Mirror;
+            //MIDDLE_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //RING FINGER
+            RING_FINGER_MCP2.transform.position = (new Vector3(p13pos2.x + gain3, p13pos2.y, p13pos2.z + gain2 * addLeft)) * Mirror;
+            //RING_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_PIP2.transform.position = (new Vector3(p14pos2.x + gain3, p14pos2.y, p14pos2.z + gain2 * addLeft)) * Mirror;
+            //RING_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_DIP2.transform.position = (new Vector3(p15pos2.x + gain3, p15pos2.y, p15pos2.z + gain2 * addLeft)) * Mirror;
+            //RING_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            RING_FINGER_TIP2.transform.position = (new Vector3(p16pos2.x + gain3, p16pos2.y, p16pos2.z + gain2 * addLeft)) * Mirror;
+            //RING_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //PINKY
+            PINKY_MCP2.transform.position = (new Vector3(p17pos2.x + gain3, p17pos2.y, p17pos2.z + gain2 * addLeft)) * Mirror;
+            //PINKY_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_PIP2.transform.position = (new Vector3(p18pos2.x + gain3, p18pos2.y, p18pos2.z + gain2 * addLeft)) * Mirror;
+            //PINKY_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_DIP2.transform.position = (new Vector3(p19pos2.x + gain3, p19pos2.y, p19pos2.z + gain2 * addLeft)) * Mirror;
+            //PINKY_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            PINKY_TIP2.transform.position = (new Vector3(p20pos2.x + gain3, p20pos2.y, p20pos2.z + gain2 * addLeft)) * Mirror;
+            //PINKY_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
+
+            //COORDINATES FOR THE GRABBING POINT
+            float centerXleft = (PINKY_TIP2.transform.position[0] * 0.15f + RING_FINGER_TIP2.transform.position[0] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[0] * 0.25f + INDEX_FINGER_TIP2.transform.position[0] * 0.15f + THUMB_TIP2.transform.position[0] * 0.3f) /*/ 5.0f*/;
+            float centerYleft = (PINKY_TIP2.transform.position[1] * 0.15f + RING_FINGER_TIP2.transform.position[1] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[1] * 0.25f + INDEX_FINGER_TIP2.transform.position[1] * 0.15f + THUMB_TIP2.transform.position[1] * 0.3f) /*/ 5.0f*/;
+            float centerZleft = (PINKY_TIP2.transform.position[2] * 0.15f + RING_FINGER_TIP2.transform.position[2] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[2] * 0.25f + INDEX_FINGER_TIP2.transform.position[2] * 0.15f + THUMB_TIP2.transform.position[2] * 0.3f) /*/ 5.0f*/;
+            GrabPointLeft.transform.position = new Vector3(centerXleft, centerYleft, centerZleft);
+
+            //Change the tag to Closed or Open
+            if (leftHandClosed == 1)
             {
-                check.GetComponent<DataLogs>().ev = "Right Hand Opened";
-            }*/
-        }
-
-        //LEFT HAND
-        //WRIST
-        WRIST2.transform.position = (new Vector3(p0pos2.x + gain3, p0pos2.y, p0pos2.z + gain2 * addLeft)) * Mirror;
-        //WRIST2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        //THUMB
-        THUMB_CMC2.transform.position = (new Vector3(p1pos2.x + gain3, p1pos2.y, p1pos2.z + gain2 * addLeft)) * Mirror;
-        //THUMB_CMC2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        THUMB_MCP2.transform.position = (new Vector3(p2pos2.x + gain3, p2pos2.y, p2pos2.z + gain2 * addLeft)) * Mirror;
-        //THUMB_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        THUMB_IP2.transform.position = (new Vector3(p3pos2.x + gain3, p3pos2.y, p3pos2.z + gain2 * addLeft)) * Mirror;
-        //THUMB_IP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        THUMB_TIP2.transform.position = (new Vector3(p4pos2.x + gain3, p4pos2.y, p4pos2.z + gain2 * addLeft)) * Mirror;
-        //THUMB_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //INDEX FINGER
-        INDEX_FINGER_MCP2.transform.position = (new Vector3(p5pos2.x + gain3, p5pos2.y, p5pos2.z + gain2 * addLeft)) * Mirror;
-        //INDEX_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-       
-        INDEX_FINGER_PIP2.transform.position = (new Vector3(p6pos2.x + gain3, p6pos2.y, p6pos2.z + gain2 * addLeft)) * Mirror;
-        //INDEX_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        INDEX_FINGER_DIP2.transform.position = (new Vector3(p7pos2.x + gain3, p7pos2.y, p7pos2.z + gain2 * addLeft)) * Mirror;
-        //INDEX_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        INDEX_FINGER_TIP2.transform.position = (new Vector3(p8pos2.x + gain3, p8pos2.y, p8pos2.z + gain2 * addLeft)) * Mirror;
-        //INDEX_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //MIDDLE FINGER
-        MIDDLE_FINGER_MCP2.transform.position = (new Vector3(p9pos2.x + gain3, p9pos2.y, p9pos2.z + gain2 * addLeft)) * Mirror;
-        //MIDDLE_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        MIDDLE_FINGER_PIP2.transform.position = (new Vector3(p10pos2.x + gain3, p10pos2.y, p10pos2.z + gain2 * addLeft)) * Mirror;
-        //MIDDLE_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        MIDDLE_FINGER_DIP2.transform.position = (new Vector3(p11pos2.x + gain3, p11pos2.y, p11pos2.z + gain2 * addLeft)) * Mirror;
-        //MIDDLE_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        MIDDLE_FINGER_TIP2.transform.position = (new Vector3(p12pos2.x + gain3, p12pos2.y, p12pos2.z + gain2 * addLeft)) * Mirror;
-        //MIDDLE_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //RING FINGER
-        RING_FINGER_MCP2.transform.position = (new Vector3(p13pos2.x + gain3, p13pos2.y, p13pos2.z + gain2 * addLeft)) * Mirror;
-        //RING_FINGER_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        RING_FINGER_PIP2.transform.position = (new Vector3(p14pos2.x + gain3, p14pos2.y, p14pos2.z + gain2 * addLeft)) * Mirror;
-        //RING_FINGER_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        RING_FINGER_DIP2.transform.position = (new Vector3(p15pos2.x + gain3, p15pos2.y, p15pos2.z + gain2 * addLeft)) * Mirror;
-        //RING_FINGER_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        RING_FINGER_TIP2.transform.position = (new Vector3(p16pos2.x + gain3, p16pos2.y, p16pos2.z + gain2 * addLeft)) * Mirror;
-        //RING_FINGER_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //PINKY
-        PINKY_MCP2.transform.position = (new Vector3(p17pos2.x + gain3, p17pos2.y, p17pos2.z + gain2 * addLeft)) * Mirror;
-        //PINKY_MCP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_PIP2.transform.position = (new Vector3(p18pos2.x + gain3, p18pos2.y, p18pos2.z + gain2 * addLeft)) * Mirror;
-        //PINKY_PIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_DIP2.transform.position = (new Vector3(p19pos2.x + gain3, p19pos2.y, p19pos2.z + gain2 * addLeft)) * Mirror;
-        //PINKY_DIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-        
-        PINKY_TIP2.transform.position = (new Vector3(p20pos2.x + gain3, p20pos2.y, p20pos2.z + gain2 * addLeft)) * Mirror;
-        //PINKY_TIP2.transform.eulerAngles = new Vector3(0, 0, 0);
-
-        //COORDINATES FOR THE GRABBING POINT
-        float centerXleft = (PINKY_TIP2.transform.position[0] * 0.15f + RING_FINGER_TIP2.transform.position[0] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[0] * 0.25f + INDEX_FINGER_TIP2.transform.position[0] * 0.15f + THUMB_TIP2.transform.position[0] * 0.3f) /*/ 5.0f*/;
-        float centerYleft = (PINKY_TIP2.transform.position[1] * 0.15f + RING_FINGER_TIP2.transform.position[1] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[1] * 0.25f + INDEX_FINGER_TIP2.transform.position[1] * 0.15f + THUMB_TIP2.transform.position[1] * 0.3f) /*/ 5.0f*/;
-        float centerZleft = (PINKY_TIP2.transform.position[2] * 0.15f + RING_FINGER_TIP2.transform.position[2] * 0.15f + MIDDLE_FINGER_TIP2.transform.position[2] * 0.25f + INDEX_FINGER_TIP2.transform.position[2] * 0.15f + THUMB_TIP2.transform.position[2] * 0.3f) /*/ 5.0f*/;
-        GrabPointLeft.transform.position = new Vector3(centerXleft, centerYleft, centerZleft);
-
-        //Change the tag to Closed or Open
-        if (leftHandClosed == 1)
-        {
-            GrabPointLeft.tag = "Closed";
-            if (check2 == 0)
-            {
-                GameObject check = GameObject.Find("Logging");
-                if (check != null)
-                {
-                    check.GetComponent<DataLogs>().ev = "Left Hand Closed";
-                }
-                check2 = 1;
+                GrabPointLeft.tag = "Closed";
+                //if (check2 == 0)
+                //{
+                    //GameObject check = GameObject.Find("Logging");
+                    if (check != null)
+                    {
+                        check.GetComponent<DataLogs>().ev += "Left Hand Closed";
+                    }
+                    check2 = 1;
+                //}
+                //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Closed";
             }
-            //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Closed";
-        }
-        else if (leftHandClosed == 0)
-        {
-            GrabPointLeft.tag = "Open";
-            check2 = 0;
-            //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Opened";
-        }
+            else if (leftHandClosed == 0)
+            {
+                GrabPointLeft.tag = "Open";
+                check2 = 0;
+                //GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Left Hand Opened";
+            }
 
-        //Logging Data
-        //if (GameObject.Find("BucketBlue") != null /*&& wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x*/)
-        /*{
-            //Right Hand
-            line += WRIST.transform.position.x.ToString().Replace(",", ".") + " " + WRIST.transform.position.y.ToString().Replace(",", ".") + " " + WRIST.transform.position.z.ToString().Replace(",", ".");
+            GameObject g = GameObject.Find("FingersUp");
+            if ( g != null )
+            {
+                string s = " " + g.GetComponent<FingerCount>().fingers.ToString();
+                check.GetComponent<DataLogs>().ev += s;
+            }
 
-            line += "," + THUMB_CMC.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_MCP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_IP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_TIP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.z.ToString().Replace(",", ".");
+            //Logging Data
+            //if (GameObject.Find("BucketBlue") != null /*&& wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x*/)
+            /*{
+                //Right Hand
+                line += WRIST.transform.position.x.ToString().Replace(",", ".") + " " + WRIST.transform.position.y.ToString().Replace(",", ".") + " " + WRIST.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + INDEX_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_CMC.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_MCP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_IP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_TIP.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + MIDDLE_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + RING_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + PINKY_MCP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_PIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_DIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_TIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_MCP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_PIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_DIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_TIP.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            //Left Hand
-            line += "," + WRIST2.transform.position.x.ToString().Replace(",", ".") + " " + WRIST2.transform.position.y.ToString().Replace(",", ".") + " " + WRIST2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_MCP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_PIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_DIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_TIP.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + THUMB_CMC2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_IP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + THUMB_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.z.ToString().Replace(",", ".");
+                //Left Hand
+                line += "," + WRIST2.transform.position.x.ToString().Replace(",", ".") + " " + WRIST2.transform.position.y.ToString().Replace(",", ".") + " " + WRIST2.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + INDEX_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + INDEX_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_CMC2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_CMC2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_MCP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_IP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_IP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + THUMB_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + THUMB_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + MIDDLE_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + MIDDLE_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + INDEX_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + INDEX_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + RING_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + RING_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + MIDDLE_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + MIDDLE_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
 
-            line += "," + PINKY_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.z.ToString().Replace(",", ".");
-            line += "," + PINKY_TIP2.transform.position.x.ToString().Replace(",",".") + " " + PINKY_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP2.transform.position.z.ToString().Replace(",", ".")*/ /*+ "\n"*/;
+                line += "," + RING_FINGER_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_MCP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_PIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_DIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + RING_FINGER_TIP2.transform.position.x.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + RING_FINGER_TIP2.transform.position.z.ToString().Replace(",", ".");
+
+                line += "," + PINKY_MCP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_MCP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_PIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_PIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_DIP2.transform.position.x.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_DIP2.transform.position.z.ToString().Replace(",", ".");
+                line += "," + PINKY_TIP2.transform.position.x.ToString().Replace(",",".") + " " + PINKY_TIP2.transform.position.y.ToString().Replace(",", ".") + " " + PINKY_TIP2.transform.position.z.ToString().Replace(",", ".")*/ /*+ "\n"*/;
 
             /*log.GetComponent<DataLogs>().Log(line);
             line = "";
         }*/
 
-        //wristRightX = WRIST.transform.position.x;
-        //wristLeftX = WRIST2.transform.position.x;
+            //wristRightX = WRIST.transform.position.x;
+            //wristLeftX = WRIST2.transform.position.x;
 
+        /*}*/
+        
     }
+
+    void Wait()
+    {
+        go = true;
+    }
+
 
     void OnApplicationQuit()
     {

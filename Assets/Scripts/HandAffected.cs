@@ -8,6 +8,7 @@ public class HandAffected : MonoBehaviour
     public string handAffected;
 
     public GameObject left, right, button;
+    //public GameObject colliderCheck;
 
     string hand;
 
@@ -26,6 +27,8 @@ public class HandAffected : MonoBehaviour
         }
 
         GameObject.Find("Main Camera").GetComponent<Calibration>().hand1 = handAffected;//hand;
+
+        //colliderCheck.GetComponent<ColliderCheck>().menuOn = true;
 
         Destroy(left);
         Destroy(right);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using System;
 using System.IO;
@@ -33,7 +34,7 @@ public class DataLogs : MonoBehaviour
         timestamp = (long)timePass.TotalSeconds;
         string path = Directory.GetCurrentDirectory();
         //path += @"\DataLogging\JointData\Logs(0).csv";
-        path += @"\DataLogging\JointData\Logs" + "(" + timestamp +  ")_" + Calibration.user + ".csv";
+        path += @"\DataLogging\JointData\Logs" + "(" + timestamp +  ")_" + Calibration.user + "_" + SceneManager.GetActiveScene().name +  ".csv";
         Directory.CreateDirectory(@"DataLogging\JointData");
         fileWriter = File.CreateText(path);
 
@@ -55,7 +56,7 @@ public class DataLogs : MonoBehaviour
                 }
             }
         }*/
-        ev = "Dnf";
+        ev = "";
         time = 0;
 
         aux = 10;
@@ -68,7 +69,8 @@ public class DataLogs : MonoBehaviour
         ////Logging Data
         if (aux == 10)
         {
-            if (GameObject.Find("BucketBlue") != null /*&& wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x*/)
+            //if (GameObject.Find("BucketBlue") != null /*&& wristRightX != WRIST.transform.position.x && wristLeftX != WRIST2.transform.position.x*/)
+            if (GameObject.Find("Bucket") == null)
             {
                 //Right Hand
                 line += WRIST.transform.position.x.ToString().Replace(",", ".") + " " + WRIST.transform.position.y.ToString().Replace(",", ".") + " " + WRIST.transform.position.z.ToString().Replace(",", ".");
@@ -128,7 +130,8 @@ public class DataLogs : MonoBehaviour
 
                 //log.GetComponent<DataLogs>().Log(line);
                 Log(line, ev, true);
-                ev = "DnF";
+                //ev = "DnF";
+                ev = "";
                 line = "";
 
                 aux = 1;
@@ -142,7 +145,7 @@ public class DataLogs : MonoBehaviour
         wristLeftX = WRIST2.transform.position.x;*/
     }
 
-    public void Log(string line, string eve = "DnF", bool showTimeStamp = true)
+    public void Log(string line, string eve = "", bool showTimeStamp = true)
     {
             if (showTimeStamp)
             {
@@ -160,7 +163,7 @@ public class DataLogs : MonoBehaviour
 
     public void CloseFile()
     {
-            fileWriter.Close();
+        fileWriter.Close();
     }
 
 }

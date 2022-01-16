@@ -22,6 +22,8 @@ public class Calibration : MonoBehaviour
     public string hand1;
     public static string hand;
 
+    //public GameObject colliderCheck;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,6 +93,8 @@ public class Calibration : MonoBehaviour
                 //Establish the normal behaviour of the cube (Physics and Collisions)
                 cube.GetComponent<Rigidbody>().isKinematic = false;
                 cube.GetComponent<Rigidbody>().detectCollisions = true;
+
+                //colliderCheck.GetComponent<ColliderCheck>().menuOn = true;
             }
         }
         else 

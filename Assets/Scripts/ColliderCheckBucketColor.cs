@@ -64,7 +64,7 @@ public class ColliderCheckBucketColor : MonoBehaviour
         else if(find == droppedObject && other.gameObject.tag != color)
         {
             //Put the cube back into the initial position
-            if (scene.name == "Level2_Left")
+            if (scene.name == "GrabLeft")
             {
                 other.gameObject.transform.position = new Vector3(-10.16f, -5.72f, 1.8f);
             }

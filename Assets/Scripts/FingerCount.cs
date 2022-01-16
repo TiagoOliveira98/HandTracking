@@ -59,6 +59,9 @@ public class FingerCount : MonoBehaviour
         fingerAux = fingers;
         fingerCount();
 
+        //Save the number put out in the logging
+
+
         //Show the number focused
         //N.text = fingers.ToString();
 

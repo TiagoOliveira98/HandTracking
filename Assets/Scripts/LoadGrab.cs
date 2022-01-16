@@ -10,23 +10,23 @@ public class LoadGrab : MonoBehaviour
     {
         if(Calibration.hand == "L")
         {
-            SceneManager.LoadScene("Level2_Left");
+            SceneManager.LoadScene("GrabLeft");
         }
         else if(Calibration.hand == "R")
         {
-            SceneManager.LoadScene("Level2");
+            SceneManager.LoadScene("Grab");
         }
         else if(Calibration.hand == "LR")
         {
             if (Random.Range(1, 3) == 1)
             {
-                SceneManager.LoadScene("Level2_Left");
+            SceneManager.LoadScene("Grab");
             }
             else
             {
-                SceneManager.LoadScene("Level2");
+                SceneManager.LoadScene("GrabLeft");
             }
         }
-        
+        ////SceneManager.LoadScene("Level2");
     }
 }
