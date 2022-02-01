@@ -66,7 +66,8 @@ public class Grab : MonoBehaviour
         PINKY_TIP.GetComponent<Rigidbody>().detectCollisions = true;
         if ((other.gameObject.tag == "Grabbable" || other.gameObject.tag == "blue" || other.gameObject.tag == "green") && tag == "Open")
         {
-            GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Object Dropped";
+            if (GameObject.Find("Logging") != null)
+                GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Object Dropped";
         }
     }
 
@@ -74,7 +75,8 @@ public class Grab : MonoBehaviour
     {
         if ((other.gameObject.tag == "Grabbable" || other.gameObject.tag == "blue" || other.gameObject.tag == "green") && tag == "Closed")
         {
-            GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Object Grabbed";
+            if (GameObject.Find("Logging") != null)
+                GameObject.Find("Logging").GetComponent<DataLogs>().ev = "Object Grabbed";
         }
     }
 

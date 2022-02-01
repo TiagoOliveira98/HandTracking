@@ -187,7 +187,9 @@ public class ReceiveHandData : MonoBehaviour {
 
             //
             GameObject check = GameObject.Find("Logging");
-            check.GetComponent<DataLogs>().ev = "";
+            ///ADDED HERE 20:49
+            if(check != null)
+                check.GetComponent<DataLogs>().ev = "";
 
 
             //Update the coordinates of each joint from both hands
@@ -475,7 +477,11 @@ public class ReceiveHandData : MonoBehaviour {
 
     void OnApplicationQuit()
     {
-        log.GetComponent<DataLogs>().CloseFile();
+        //ADDED HERE 20:50
+        GameObject check = GameObject.Find("Logging");
+        ///ADDED HERE 20:49
+        if (check != null) 
+            log.GetComponent<DataLogs>().CloseFile();
     }
 
     // init

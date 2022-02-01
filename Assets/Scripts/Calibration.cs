@@ -91,8 +91,12 @@ public class Calibration : MonoBehaviour
                 distRef2 = (float)Math.Sqrt(Mathf.Pow(x1 - x2, 2f) + Mathf.Pow(y1 - y2, 2f) + Mathf.Pow(z1 - z2, 2f));
 
                 //Establish the normal behaviour of the cube (Physics and Collisions)
-                cube.GetComponent<Rigidbody>().isKinematic = false;
-                cube.GetComponent<Rigidbody>().detectCollisions = true;
+                if(cube != null)
+                {
+                    cube.GetComponent<Rigidbody>().isKinematic = false;
+                    cube.GetComponent<Rigidbody>().detectCollisions = true;
+                }
+                
 
                 //colliderCheck.GetComponent<ColliderCheck>().menuOn = true;
             }
